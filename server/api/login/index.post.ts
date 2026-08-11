@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(host ? { Host: host } : {}),
+        ...(host ? { "X-Forwarded-Host": host } : {}),
       },
       body: { email: body.email, password: body.password },
     });

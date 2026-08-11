@@ -18,10 +18,13 @@
       "products": "Produkty",
       "categories": "Druhy zvířat",
       "new_client": "Nový klient",
+      "client_detail": "Detail klienta",
       "edit_client": "Editace klienta",
       "new_product": "Nový produkt",
+      "product_detail": "Detail produktu",
       "edit_product": "Editace produktu",
       "new_category": "Nový druh zvířete",
+      "category_detail": "Detail kategorie",
       "edit_category": "Editace druhu zvířete"
     },
     "client": {
@@ -33,7 +36,22 @@
       "password_help": "Minimálně 8 znaků; klient si může heslo později změnit.",
       "role": "Role",
       "status": "Stav",
-      "account": "Účet klienta"
+      "account": "Účet klienta",
+      "type": "Typ klienta",
+      "type_unassigned": "Bez přiřazeného typu",
+      "profile_summary": "Profil zákazníka",
+      "profile_missing": "Profil zákazníka zatím nebyl doplněn.",
+      "aura": "Aura",
+      "visual": "Jak klient působí",
+      "behavior": "Nákupní chování",
+      "behavior_profile": "Chování a motivace",
+      "commercial_profile": "Obchodní potenciál",
+      "business_potential": "Obchodní potenciál",
+      "typical_quote": "Typická hláška",
+      "average_basket": "Průměrný košík",
+      "marketing_note": "Doporučený způsob oslovení",
+      "recommended_products": "Doporučené produkty",
+      "no_recommendations": "Pro tohoto klienta zatím nejsou nastavené doporučené produkty."
     },
     "category": {
       "name": "Druh zvířete",
@@ -41,7 +59,10 @@
       "description": "Popis",
       "parent": "Nadřazená skupina",
       "position": "Pořadí",
-      "examples": "Doporučené hlavní kategorie: Psi, Kočky, Ptáci, Koně, Hlodavci, Ryby a Teraristika."
+      "examples": "Hlavní skupiny sortimentu: Psi, Kočky, Drobní savci, Ptáci, Akvaristika a Teraristika.",
+      "description_missing": "Kategorie zatím nemá popis.",
+      "assigned_products": "Produkty v kategorii",
+      "no_products": "V této kategorii zatím nejsou žádné produkty."
     },
     "product": {
       "name": "Název produktu",
@@ -61,7 +82,15 @@
       "images": "Obrázky produktu",
       "save_images": "Uložit nové obrázky",
       "existing_images": "Nahrané obrázky",
+      "images_saved": "Obrázky byly uloženy",
       "images_after_create": "Obrázky lze nahrát po vytvoření produktu v jeho detailu.",
+      "description_missing": "Produkt zatím nemá popis.",
+      "is_published": "Publikováno",
+      "is_hidden": "Skryto",
+      "catalog_data": "Katalogové údaje",
+      "target_segments": "Cílové typy klientů",
+      "target_segments_help": "Segmenty, kterým má smysl tento produkt aktivně doporučovat.",
+      "no_target_segments": "Produkt zatím nemá přiřazený cílový segment.",
       "kinds": {
         "food": "Krmivo",
         "treats": "Pamlsky",
@@ -73,12 +102,14 @@
       }
     },
     "status": { "active": "Aktivní", "inactive": "Neaktivní", "banned": "Blokovaný" },
+    "filter": { "title": "Filtrovat přehled", "all": "Všechny možnosti", "apply": "Použít filtr", "reset": "Vymazat" },
+    "view": { "table": "Tabulka", "cards": "Karty", "actions": "Akce", "loading": "Načítám data…", "empty": "Žádné záznamy neodpovídají zadání." },
     "form": {
       "yes": "Ano",
       "no": "Ne",
       "delete_success_msg": "Záznam byl úspěšně smazán"
     },
-    "btn": { "delete": "Smazat", "submit": "Uložit", "cancel": "Zrušit" },
+    "btn": { "delete": "Smazat", "submit": "Uložit", "cancel": "Zrušit", "edit": "Upravit", "show_detail": "Zobrazit detail", "back_to_list": "Zpět na přehled" },
     "message": {
       "delete_question": "Opravdu chcete smazat záznam „{name}“?",
       "delete_question_multi": "Opravdu chcete smazat {length} záznamů?"

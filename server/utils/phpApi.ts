@@ -69,7 +69,7 @@ export async function phpApiFetch<T = any>(
     : event.headers.get("host")?.split(":")[0] || "";
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    ...(hostHeader ? { Host: hostHeader } : {}),
+    ...(hostHeader ? { "X-Forwarded-Host": hostHeader } : {}),
   };
   if (token) headers.Authorization = `Bearer ${token}`;
 

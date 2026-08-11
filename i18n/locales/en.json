@@ -10,32 +10,46 @@
       "products": "Products",
       "categories": "Animal types",
       "new_client": "New customer",
+      "client_detail": "Customer detail",
       "edit_client": "Edit customer",
       "new_product": "New product",
+      "product_detail": "Product detail",
       "edit_product": "Edit product",
       "new_category": "New animal type",
+      "category_detail": "Category detail",
       "edit_category": "Edit animal type"
     },
     "client": {
       "first_name": "First name", "last_name": "Last name", "email": "E-mail", "phone": "Phone",
       "password": "Initial password", "password_help": "At least 8 characters; the customer can change it later.",
-      "role": "Role", "status": "Status", "account": "Customer account"
+      "role": "Role", "status": "Status", "account": "Customer account", "type": "Customer type",
+      "type_unassigned": "No customer type", "profile_summary": "Customer profile", "profile_missing": "The customer profile has not been completed yet.",
+      "aura": "Aura", "visual": "Customer appearance", "behavior": "Shopping behavior", "behavior_profile": "Behavior and motivation",
+      "commercial_profile": "Commercial potential", "business_potential": "Commercial potential", "typical_quote": "Typical quote",
+      "average_basket": "Average basket", "marketing_note": "Recommended messaging", "recommended_products": "Recommended products",
+      "no_recommendations": "No products have been recommended to this customer yet."
     },
     "category": {
       "name": "Animal type", "syscode": "System code", "description": "Description", "parent": "Parent group", "position": "Position",
-      "examples": "Suggested main categories: Dogs, Cats, Birds, Horses, Rodents, Fish and Reptiles."
+      "examples": "Main assortment groups: Dogs, Cats, Small pets, Birds, Aquatics and Reptiles.",
+      "description_missing": "This category has no description yet.", "assigned_products": "Products in category", "no_products": "There are no products in this category yet."
     },
     "product": {
       "name": "Product name", "sku": "SKU", "sku_help": "If left empty, the backend generates an SKU automatically.",
       "ean": "EAN", "brand": "Brand", "kind": "Product type", "variant": "Variant", "price": "Price incl. VAT",
       "stock": "In stock", "weight": "Weight / volume", "unit": "Unit", "published": "Published", "animals": "Suitable for",
       "description": "Description", "images": "Product images", "save_images": "Save new images", "existing_images": "Uploaded images",
-      "images_after_create": "Images can be uploaded from the product detail after it has been created.",
+      "images_saved": "Images saved", "images_after_create": "Images can be uploaded from the product detail after it has been created.",
+      "description_missing": "This product has no description yet.", "is_published": "Published", "is_hidden": "Hidden", "catalog_data": "Catalogue data",
+      "target_segments": "Target customer types", "target_segments_help": "Segments to whom this product should be actively recommended.",
+      "no_target_segments": "This product has no target segment yet.",
       "kinds": { "food": "Food", "treats": "Treats", "toys": "Toys", "hygiene": "Hygiene", "equipment": "Equipment", "supplements": "Supplements", "other": "Other" }
     },
     "status": { "active": "Active", "inactive": "Inactive", "banned": "Blocked" },
+    "filter": { "title": "Filter overview", "all": "All options", "apply": "Apply filter", "reset": "Clear" },
+    "view": { "table": "Table", "cards": "Cards", "actions": "Actions", "loading": "Loading data…", "empty": "No records match the criteria." },
     "form": { "yes": "Yes", "no": "No", "delete_success_msg": "Record deleted successfully" },
-    "btn": { "delete": "Delete", "submit": "Save", "cancel": "Cancel" },
+    "btn": { "delete": "Delete", "submit": "Save", "cancel": "Cancel", "edit": "Edit", "show_detail": "View detail", "back_to_list": "Back to overview" },
     "message": { "delete_question": "Delete “{name}”?", "delete_question_multi": "Delete {length} records?" },
     "aria": { "delete_selected": "Delete selected records", "create_new": "Create a new record" }
   }

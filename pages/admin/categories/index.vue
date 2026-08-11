@@ -15,6 +15,7 @@ useHead({ title: computed(() => t("$.admin.categories")) });
       :config="config"
       list-route-syscode="admin_categories"
       create-path="/admin/categories/create"
+      resource="category"
     />
   </div>
 </template>

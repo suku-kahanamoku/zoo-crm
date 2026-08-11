@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     method: "POST",
     headers: {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(host ? { Host: host } : {}),
+      ...(host ? { "X-Forwarded-Host": host } : {}),
     },
     body: form,
   });

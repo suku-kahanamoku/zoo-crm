@@ -12,5 +12,6 @@ useHead({ title: computed(() => t("$.admin.clients")) });
     list-route-syscode="admin_clients"
     create-path="/admin/clients/create"
     name-field="email"
+    resource="client"
   />
 </template>

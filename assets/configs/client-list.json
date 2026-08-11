@@ -10,6 +10,7 @@
       "type": "text",
       "label": "$.client.email",
       "operator": { "value": "$regex", "enabled": true },
+      "filterable": true,
       "clearable": true
     },
     {
@@ -24,13 +25,15 @@
       "type": "text",
       "label": "$.client.last_name",
       "operator": { "value": "$regex", "enabled": true },
+      "filterable": true,
       "clearable": true
     },
     {
-      "name": "phone",
-      "type": "text",
-      "label": "$.client.phone",
-      "operator": { "value": "$regex", "enabled": true },
+      "name": "client_type_id",
+      "colName": "client_type.label",
+      "type": "select",
+      "label": "$.client.type",
+      "filterable": true,
       "clearable": true
     },
     {
@@ -42,6 +45,7 @@
         { "value": "inactive", "label": "$.status.inactive" },
         { "value": "banned", "label": "$.status.banned" }
       ],
+      "filterable": true,
       "clearable": true
     }
   ]

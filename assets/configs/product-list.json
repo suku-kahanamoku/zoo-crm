@@ -10,6 +10,7 @@
       "type": "text",
       "label": "$.product.name",
       "operator": { "value": "$regex", "enabled": true },
+      "filterable": true,
       "clearable": true
     },
     {
@@ -17,6 +18,7 @@
       "type": "text",
       "label": "$.product.sku",
       "operator": { "value": "$regex", "enabled": true },
+      "filterable": true,
       "clearable": true
     },
     {
@@ -32,6 +34,7 @@
         { "value": "supplements", "label": "$.product.kinds.supplements" },
         { "value": "other", "label": "$.product.kinds.other" }
       ],
+      "filterable": true,
       "clearable": true
     },
     { "name": "price", "type": "number", "label": "$.product.price", "clearable": true },
@@ -44,6 +47,7 @@
         { "value": 1, "label": "$.form.yes" },
         { "value": 0, "label": "$.form.no" }
       ],
+      "filterable": true,
       "clearable": true
     }
   ]

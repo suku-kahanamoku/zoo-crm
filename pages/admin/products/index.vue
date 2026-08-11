@@ -11,5 +11,6 @@ useHead({ title: computed(() => t("$.admin.products")) });
     :config="config"
     list-route-syscode="admin_products"
     create-path="/admin/products/create"
+    resource="product"
   />
 </template>

@@ -36,10 +36,13 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    phpApiBaseUrl: process.env.PHP_API_BASE_URL,
-    phpFileRoot: process.env.PHP_FILE_ROOT,
+    phpApiBaseUrl:
+      process.env.PHP_API_BASE_URL || "http://127.0.0.1/php/php-core/api",
+    phpFileRoot:
+      process.env.PHP_FILE_ROOT || "/home/suku/Workspace/php/php-core",
     public: {
-      frontendHost: process.env.FRONTEND_HOST,
+      frontendHost:
+        process.env.FRONTEND_HOST || "http://zoo.localhost:3000",
     },
   },
 

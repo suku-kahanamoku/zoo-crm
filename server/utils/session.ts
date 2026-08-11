@@ -12,7 +12,7 @@ export async function setUserSessionFromPhp(
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
-      ...(host ? { Host: host } : {}),
+      ...(host ? { "X-Forwarded-Host": host } : {}),
     },
   }).catch(() => null);
 

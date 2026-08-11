@@ -8,8 +8,25 @@ export interface IClient extends IItem {
   status?: "active" | "inactive" | "banned";
   role_id?: number;
   role?: { id: number; name: string; label?: string };
+  client_type_id?: number | null;
+  client_type?: { id: number; syscode: string; label: string } | null;
+  profile?: IClientProfile | null;
   last_login_at?: string | null;
   created_at?: string;
+}
+
+export interface IClientProfile {
+  summary?: string;
+  aura?: string;
+  visual?: string;
+  behavior?: string;
+  business_potential?: string;
+  typical_quote?: string;
+  preferred_animals?: string[];
+  preferred_product_kinds?: string[];
+  recommended_product_skus?: string[];
+  average_basket?: number;
+  marketing_note?: string;
 }
 
 export interface IAnimalCategory extends IItem {
@@ -25,6 +42,7 @@ export interface IProductData {
   brand?: string;
   weight?: number;
   unit?: string;
+  target_segments?: string[];
 }
 
 export interface IProductFile {
