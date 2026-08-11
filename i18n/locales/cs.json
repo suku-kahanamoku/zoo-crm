@@ -1,0 +1,88 @@
+{
+  "$": {
+    "base": {
+      "title": "Zoo CRM",
+      "description": "Správa klientů a sortimentu e-shopu pro domácí zvířata"
+    },
+    "navbar": { "logout": "Odhlásit" },
+    "login": {
+      "title": "Přihlášení do Zoo CRM",
+      "label": "Přihlášení",
+      "description": "Přihlaste se administrátorským účtem",
+      "keywords": "zoo crm"
+    },
+    "admin": {
+      "title": "Dashboard",
+      "subtitle": "Přehled klientů a sortimentu vašeho pet shopu",
+      "clients": "Klienti",
+      "products": "Produkty",
+      "categories": "Druhy zvířat",
+      "new_client": "Nový klient",
+      "edit_client": "Editace klienta",
+      "new_product": "Nový produkt",
+      "edit_product": "Editace produktu",
+      "new_category": "Nový druh zvířete",
+      "edit_category": "Editace druhu zvířete"
+    },
+    "client": {
+      "first_name": "Jméno",
+      "last_name": "Příjmení",
+      "email": "E-mail",
+      "phone": "Telefon",
+      "password": "Počáteční heslo",
+      "password_help": "Minimálně 8 znaků; klient si může heslo později změnit.",
+      "role": "Role",
+      "status": "Stav",
+      "account": "Účet klienta"
+    },
+    "category": {
+      "name": "Druh zvířete",
+      "syscode": "Systémový kód",
+      "description": "Popis",
+      "parent": "Nadřazená skupina",
+      "position": "Pořadí",
+      "examples": "Doporučené hlavní kategorie: Psi, Kočky, Ptáci, Koně, Hlodavci, Ryby a Teraristika."
+    },
+    "product": {
+      "name": "Název produktu",
+      "sku": "SKU",
+      "sku_help": "Při ponechání prázdné hodnoty vygeneruje backend SKU automaticky.",
+      "ean": "EAN",
+      "brand": "Značka",
+      "kind": "Typ produktu",
+      "variant": "Varianta",
+      "price": "Cena s DPH",
+      "stock": "Skladem",
+      "weight": "Hmotnost / objem",
+      "unit": "Jednotka",
+      "published": "Publikováno",
+      "animals": "Určeno pro",
+      "description": "Popis",
+      "images": "Obrázky produktu",
+      "save_images": "Uložit nové obrázky",
+      "existing_images": "Nahrané obrázky",
+      "images_after_create": "Obrázky lze nahrát po vytvoření produktu v jeho detailu.",
+      "kinds": {
+        "food": "Krmivo",
+        "treats": "Pamlsky",
+        "toys": "Hračky",
+        "hygiene": "Hygiena",
+        "equipment": "Chovatelské potřeby",
+        "supplements": "Doplňky stravy",
+        "other": "Ostatní"
+      }
+    },
+    "status": { "active": "Aktivní", "inactive": "Neaktivní", "banned": "Blokovaný" },
+    "form": {
+      "yes": "Ano",
+      "no": "Ne",
+      "delete_success_msg": "Záznam byl úspěšně smazán"
+    },
+    "btn": { "delete": "Smazat", "submit": "Uložit", "cancel": "Zrušit" },
+    "message": {
+      "delete_question": "Opravdu chcete smazat záznam „{name}“?",
+      "delete_question_multi": "Opravdu chcete smazat {length} záznamů?"
+    },
+    "aria": { "delete_selected": "Smazat vybrané záznamy", "create_new": "Vytvořit nový záznam" }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "syscode": "admin-product-create",
+  "postUrl": "/api/admin/product",
+  "method": "POST",
+  "fields": [
+    { "name": "name", "type": "text", "label": "$.product.name", "required": true },
+    { "name": "sku", "type": "text", "label": "$.product.sku", "help": "$.product.sku_help" },
+    {
+      "name": "kind",
+      "type": "select",
+      "label": "$.product.kind",
+      "options": [
+        { "value": "food", "label": "$.product.kinds.food" },
+        { "value": "treats", "label": "$.product.kinds.treats" },
+        { "value": "toys", "label": "$.product.kinds.toys" },
+        { "value": "hygiene", "label": "$.product.kinds.hygiene" },
+        { "value": "equipment", "label": "$.product.kinds.equipment" },
+        { "value": "supplements", "label": "$.product.kinds.supplements" },
+        { "value": "other", "label": "$.product.kinds.other" }
+      ],
+      "required": true
+    },
+    { "name": "data.brand", "type": "text", "label": "$.product.brand" },
+    { "name": "data.ean", "type": "text", "label": "$.product.ean" },
+    { "name": "variant", "type": "text", "label": "$.product.variant" },
+    { "name": "price", "type": "number", "label": "$.product.price", "required": true, "digits": 2 },
+    { "name": "stock_quantity", "type": "number", "label": "$.product.stock" },
+    { "name": "data.weight", "type": "number", "label": "$.product.weight", "digits": 3 },
+    {
+      "name": "data.unit",
+      "type": "select",
+      "label": "$.product.unit",
+      "options": [
+        { "value": "g", "label": "g" },
+        { "value": "kg", "label": "kg" },
+        { "value": "ml", "label": "ml" },
+        { "value": "l", "label": "l" },
+        { "value": "ks", "label": "ks" }
+      ]
+    },
+    {
+      "name": "published",
+      "type": "select",
+      "label": "$.product.published",
+      "options": [
+        { "value": 1, "label": "$.form.yes" },
+        { "value": 0, "label": "$.form.no" }
+      ]
+    },
+    {
+      "name": "category_ids",
+      "type": "select",
+      "label": "$.product.animals",
+      "multiple": true,
+      "required": true,
+      "restOptions": { "url": "/api/admin/category?limit=100", "label": "name", "value": "id" }
+    },
+    { "name": "description", "type": "textarea", "label": "$.product.description" }
+  ]
+}

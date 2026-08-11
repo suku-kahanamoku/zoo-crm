@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: "Manrope", system-ui, sans-serif;
+
+  --color-primary-50: #eefbf3;
+  --color-primary-100: #d8f5e3;
+  --color-primary-200: #b4eaca;
+  --color-primary-300: #82d9a8;
+  --color-primary-400: #4abe7f;
+  --color-primary-500: #269f61;
+  --color-primary-600: #19804d;
+  --color-primary-700: #17663f;
+  --color-primary-800: #165136;
+  --color-primary-900: #14432e;
+  --color-primary-950: #09251a;
+
+  --color-secondary-50: #fff8eb;
+  --color-secondary-100: #feebc7;
+  --color-secondary-200: #fdd58a;
+  --color-secondary-300: #fbb94d;
+  --color-secondary-400: #f99f24;
+  --color-secondary-500: #f3830c;
+  --color-secondary-600: #d75f06;
+  --color-secondary-700: #b23f09;
+  --color-secondary-800: #91310f;
+  --color-secondary-900: #772910;
+  --color-secondary-950: #441205;
+}
+
+html,
+body,
+#__nuxt {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: #f8fafc;
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+.crm-surface {
+  background-image:
+    radial-gradient(circle at 12% 10%, rgb(38 159 97 / 8%), transparent 30rem),
+    radial-gradient(circle at 88% 90%, rgb(243 131 12 / 8%), transparent 28rem);
+}
