@@ -1,0 +1,10 @@
+{
+  "syscode": "admin-product-detail",
+  "restUrl": "/api/admin/product/${route.meta.id}",
+  "relations": {
+    "categories": { "restUrl": "/api/admin/category?limit=100" },
+    "clientTypes": {
+      "restUrl": "/api/admin/enumeration?limit=100&q=%7B%22type%22%3A%7B%22value%22%3A%22client_type%22%7D%7D"
+    }
+  }
+}

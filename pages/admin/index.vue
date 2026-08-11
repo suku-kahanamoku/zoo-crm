@@ -1,14 +1,17 @@
 <script setup lang="ts">
+import dashboardConfig from "@/assets/configs/dashboard.json";
+
 definePageMeta({ layout: "admin", syscode: "admin", title: "$.admin.title" });
-const { t } = useLang();
+const { t, locale } = useLang();
 const localePath = useLocalePath();
 const { user } = useUserSession();
 
 const { data: stats, pending } = useAsyncData("dashboard-stats", async () => {
+  const sources = dashboardConfig.sources;
   const [clients, products, categories] = await Promise.all([
-    useApi("/api/admin/client?limit=5"),
-    useApi("/api/admin/product?limit=5"),
-    useApi("/api/admin/category?limit=5"),
+    useApi(sources.clients.restUrl),
+    useApi(sources.products.restUrl),
+    useApi(sources.categories.restUrl),
   ]);
   return {
     clients: Number((clients as any)?.meta?.total || (clients as any)?.data?.length || 0),
@@ -46,9 +49,9 @@ const cards = computed(() => [
   },
 ]);
 
-const userName = computed(() => user.value?.first_name || "administrátore");
+const userName = computed(() => user.value?.first_name || t("$.dashboard.administrator"));
 const money = (value: number) =>
-  new Intl.NumberFormat("cs-CZ", { style: "currency", currency: "CZK" }).format(value);
+  new Intl.NumberFormat(locale.value === "en" ? "en-GB" : "cs-CZ", { style: "currency", currency: "CZK" }).format(value);
 
 useHead({ title: computed(() => t("$.admin.title")) });
 </script>
@@ -57,17 +60,17 @@ useHead({ title: computed(() => t("$.admin.title")) });
   <div class="mx-auto w-full max-w-7xl space-y-6 px-5 pb-12 pt-6 sm:px-7">
     <section class="crm-hero-panel p-7 sm:p-9">
       <div class="relative z-10 max-w-3xl">
-        <p class="mb-3 text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-100">Řídicí centrum Zoo CRM</p>
-        <h1 class="text-3xl font-extrabold tracking-tight sm:text-5xl">Dobrý den, {{ userName }}.</h1>
+        <p class="mb-3 text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-100">{{ t("$.dashboard.eyebrow") }}</p>
+        <h1 class="text-3xl font-extrabold tracking-tight sm:text-5xl">{{ t("$.dashboard.greeting", { name: userName }) }}</h1>
         <p class="mt-4 max-w-2xl text-base leading-7 text-emerald-50/85 sm:text-lg">
-          Mějte klientské profily, sortiment a chytrá doporučení na jednom místě. Přehledně a bez zbytečného hledání.
+          {{ t("$.dashboard.description") }}
         </p>
         <div class="mt-7 flex flex-wrap gap-3">
           <UButton :to="localePath('/admin/clients/create')" color="secondary" size="lg" icon="i-heroicons-user-plus">
             {{ t("$.admin.new_client") }}
           </UButton>
           <UButton :to="localePath('/admin/products')" color="neutral" variant="soft" size="lg" trailing-icon="i-heroicons-arrow-right">
-            Projít sortiment
+            {{ t("$.dashboard.browse_catalogue") }}
           </UButton>
         </div>
       </div>
@@ -98,10 +101,10 @@ useHead({ title: computed(() => t("$.admin.title")) });
         <template #header>
           <div class="flex items-center justify-between gap-3">
             <div>
-              <p class="crm-eyebrow">Poslední aktivita</p>
-              <h2 class="text-xl font-extrabold">Noví klienti</h2>
+              <p class="crm-eyebrow">{{ t("$.dashboard.recent_activity") }}</p>
+              <h2 class="text-xl font-extrabold">{{ t("$.dashboard.new_customers") }}</h2>
             </div>
-            <UButton :to="localePath('/admin/clients')" color="neutral" variant="ghost" trailing-icon="i-heroicons-arrow-right">Všichni klienti</UButton>
+            <UButton :to="localePath('/admin/clients')" color="neutral" variant="ghost" trailing-icon="i-heroicons-arrow-right">{{ t("$.dashboard.all_customers") }}</UButton>
           </div>
         </template>
         <div v-if="stats?.recentClients?.length" class="divide-y divide-default">
@@ -121,14 +124,14 @@ useHead({ title: computed(() => t("$.admin.title")) });
             <UBadge color="neutral" variant="subtle">{{ t(`$.status.${client.status || 'active'}`) }}</UBadge>
           </NuxtLink>
         </div>
-        <p v-else class="py-6 text-center text-muted">Zatím nejsou evidováni žádní klienti.</p>
+        <p v-else class="py-6 text-center text-muted">{{ t("$.dashboard.no_customers") }}</p>
       </UCard>
 
       <UCard>
         <template #header>
           <div>
-            <p class="crm-eyebrow">Sortiment</p>
-            <h2 class="text-xl font-extrabold">Poslední produkty</h2>
+            <p class="crm-eyebrow">{{ t("$.dashboard.catalogue") }}</p>
+            <h2 class="text-xl font-extrabold">{{ t("$.dashboard.latest_products") }}</h2>
           </div>
         </template>
         <div v-if="stats?.recentProducts?.length" class="space-y-3">
@@ -148,7 +151,7 @@ useHead({ title: computed(() => t("$.admin.title")) });
             <span class="whitespace-nowrap text-sm font-extrabold text-primary">{{ money(Number(product.price || 0)) }}</span>
           </NuxtLink>
         </div>
-        <p v-else class="py-6 text-center text-muted">Zatím nejsou evidovány žádné produkty.</p>
+        <p v-else class="py-6 text-center text-muted">{{ t("$.dashboard.no_products") }}</p>
       </UCard>
     </section>
   </div>

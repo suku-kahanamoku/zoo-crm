@@ -1,24 +1,26 @@
 <script setup lang="ts">
 const route = useRoute();
 const localePath = useLocalePath();
+const { t, locale } = useLang();
 
-const labels: Record<string, string> = {
-  admin: "Dashboard",
-  clients: "Klienti",
-  products: "Produkty",
-  categories: "Druhy zvířat",
-  create: "Nový záznam",
-  edit: "Úprava",
-};
+const labels = computed<Record<string, string>>(() => ({
+  admin: t("$.admin.title"),
+  clients: t("$.admin.clients"),
+  products: t("$.admin.products"),
+  categories: t("$.admin.categories"),
+  create: t("$.breadcrumb.create"),
+  edit: t("$.breadcrumb.edit"),
+}));
 
 const items = computed(() => {
   const segments = route.path.split("/").filter(Boolean);
+  if (segments[0] === locale.value) segments.shift();
   return [
     { label: "", icon: "i-heroicons-home", to: localePath("/admin") },
     ...segments.slice(1).map((segment, index) => {
       const decoded = decodeURIComponent(segment).replace(/--\$\d+$/, "");
       return {
-        label: labels[decoded] || decoded,
+        label: labels.value[decoded] || decoded,
         to: localePath(`/admin/${segments.slice(1, index + 2).join("/")}`),
       };
     }),

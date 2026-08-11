@@ -1,5 +1,10 @@
+<script setup lang="ts">
+const localePath = useLocalePath();
+const { t } = useLang();
+</script>
+
 <template>
-  <NuxtLink to="/admin" class="group flex items-center gap-3" aria-label="Zoo CRM">
+  <NuxtLink :to="localePath('/admin')" class="group flex items-center gap-3" aria-label="Zoo CRM">
     <span
       class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500 to-primary-800 text-white shadow-lg shadow-primary/25 transition group-hover:-rotate-3 group-hover:scale-105"
     >
@@ -11,7 +16,7 @@
         Zoo CRM
       </span>
       <span class="block text-[10px] font-bold uppercase tracking-[0.2em] text-primary-600">
-        Chytré profily
+        {{ t("$.base.smart_profiles") }}
       </span>
     </span>
   </NuxtLink>

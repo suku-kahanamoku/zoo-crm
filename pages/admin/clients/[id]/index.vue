@@ -1,18 +1,21 @@
 <script setup lang="ts">
+import configSource from "@/assets/configs/client-detail.json";
 import type { IClient, IProduct } from "@/types/crm";
 
-definePageMeta({ layout: "admin", syscode: "admin_clients_detail", title: "$.admin.client_detail" });
-const { t } = useLang();
+definePageMeta({
+  layout: "admin",
+  syscode: "admin_clients_detail",
+  title: "$.admin.client_detail",
+});
+const { t, locale } = useLang();
 const route = useRoute();
 const localePath = useLocalePath();
-const resourceId = useResourceId();
-const { data: response, pending } = useAsyncData(
-  () => `client-detail-${resourceId.value}`,
-  () => useApi(`/api/admin/client/${resourceId.value}`),
-  { watch: [resourceId] },
-);
-const { data: productsResponse } = useAsyncData("client-detail-products", () =>
-  useApi("/api/admin/product?limit=100"),
+const { config, response, loading: pending } = useAdminResource<IClient>(configSource, "admin_clients");
+const productsUrl = computed(() => config.value?.relations?.products?.restUrl as string | undefined);
+const { data: productsResponse } = useAsyncData(
+  () => `${config.value?.syscode || "client-detail"}-products`,
+  () => productsUrl.value ? useApi(productsUrl.value) : Promise.resolve({}),
+  { watch: [productsUrl] },
 );
 const client = computed(() => (response.value as any)?.data as IClient | undefined);
 const recommendedProducts = computed(() => {
@@ -24,9 +27,12 @@ const recommendedProducts = computed(() => {
 const fullName = computed(() =>
   client.value ? `${client.value.first_name} ${client.value.last_name}` : t("$.admin.client_detail"),
 );
-const editPath = computed(() => localePath(`${route.path}/edit`));
+const editPath = computed(() => {
+  const path = route.path.replace(new RegExp(`^/${locale.value}(?=/|$)`), "");
+  return localePath(`${path}/edit`);
+});
 const money = (value: number) =>
-  new Intl.NumberFormat("cs-CZ", { style: "currency", currency: "CZK" }).format(value);
+  new Intl.NumberFormat(locale.value === "en" ? "en-GB" : "cs-CZ", { style: "currency", currency: "CZK" }).format(value);
 
 useHead({ title: fullName });
 </script>

@@ -14,32 +14,39 @@ export function useAdminResource<T extends { id?: number }>(
 
   const selected = ref<T[]>([]);
   const deleteDialogOpen = ref(false);
-
-  const { data: config } = useAsyncData(
-    () => `${resourceConfig.syscode || listRouteSyscode}-config`,
-    async () => {
-      const result = CLONE(resourceConfig);
-      updateConfig(route, result);
-      return result as IFormConfig;
-    },
-    { watch: [() => route.query] },
+  const resourceId = computed(() =>
+    route.params?.id ? parseResourceId(route.params.id as string | string[]) : undefined,
   );
+  const resolvedRoute = computed(() =>
+    resourceId.value
+      ? { ...route, meta: { ...route.meta, id: resourceId.value } }
+      : route,
+  );
+
+  const config = computed<IFormConfig>(() => {
+    const result = CLONE(resourceConfig);
+    updateConfig(resolvedRoute.value as any, result);
+    return result as IFormConfig;
+  });
 
   const {
     data: response,
     pending: loading,
     refresh,
   } = useAsyncData(
-    () => `${config.value?.syscode || listRouteSyscode}-data`,
+    () => `${config.value?.syscode || listRouteSyscode}-${resourceId.value || "root"}-data`,
     async () => {
       if (!config.value?.restUrl) return {};
 
-      let url = useCompleteUrl(config.value.restUrl, { config: config.value, route });
+      let url = useCompleteUrl(config.value.restUrl, {
+        config: config.value,
+        route: resolvedRoute.value,
+      });
       const listPath = (routes as Record<string, any>)[listRouteSyscode]?.path;
       url = useFactory(url, config.value.factory, listPath);
       return await useApi(url);
     },
-    { watch: [config], immediate: true },
+    { watch: [config, resourceId], immediate: true },
   );
 
   async function onDelete(confirmed: boolean) {
@@ -50,7 +57,7 @@ export function useAdminResource<T extends { id?: number }>(
         selected.value.map((item) => {
           const url = useUrl(config.value!.deleteUrl!, {
             config: config.value!,
-            route,
+            route: resolvedRoute.value,
             item,
           });
           return useApi(url, { method: "DELETE" });
@@ -101,6 +108,7 @@ export function useAdminResource<T extends { id?: number }>(
 
   return {
     config,
+    resourceId,
     response,
     meta: computed(() => (response.value as any)?.meta),
     loading,

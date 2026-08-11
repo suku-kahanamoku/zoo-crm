@@ -1,14 +1,15 @@
 <script setup lang="ts">
 const { loggedIn } = useUserSession();
+const { t } = useLang();
 const localePath = useLocalePath();
 const open = ref(true);
 const colorMode = useColorMode();
 
 const navigation = computed(() => [
-  { label: "Dashboard", to: localePath("/admin"), icon: "i-heroicons-squares-2x2" },
-  { label: "Klienti", to: localePath("/admin/clients"), icon: "i-heroicons-users" },
-  { label: "Produkty", to: localePath("/admin/products"), icon: "i-heroicons-shopping-bag" },
-  { label: "Druhy zvířat", to: localePath("/admin/categories"), icon: "i-lucide-paw-print" },
+  { label: t("$.admin.title"), to: localePath("/admin"), icon: "i-heroicons-squares-2x2" },
+  { label: t("$.admin.clients"), to: localePath("/admin/clients"), icon: "i-heroicons-users" },
+  { label: t("$.admin.products"), to: localePath("/admin/products"), icon: "i-heroicons-shopping-bag" },
+  { label: t("$.admin.categories"), to: localePath("/admin/categories"), icon: "i-lucide-paw-print" },
 ]);
 
 useSeoMeta({ robots: "noindex, nofollow" });
@@ -30,13 +31,14 @@ useSeoMeta({ robots: "noindex, nofollow" });
       <template #right>
         <div class="hidden items-center gap-2 rounded-full border border-default bg-elevated/70 px-3 py-1.5 text-xs font-bold text-muted lg:flex">
           <span class="size-2 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgb(16_185_129_/_12%)]" />
-          CRM online
+          {{ t("$.layout.crm_online") }}
         </div>
+        <UiLanguageSwitcher />
         <UButton
           :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
           color="neutral"
           variant="ghost"
-          aria-label="Přepnout barevný režim"
+          :aria-label="t('$.layout.toggle_color_mode')"
           @click="colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'"
         />
         <UiProfileDropdownMenu v-if="loggedIn" />
@@ -68,9 +70,9 @@ useSeoMeta({ robots: "noindex, nofollow" });
           <div class="m-2 rounded-xl bg-primary/8 p-3 text-xs text-muted">
             <div class="mb-2 flex items-center gap-2 font-extrabold text-highlighted">
               <UIcon name="i-lucide-sparkles" class="size-4 text-primary" />
-              Chytřejší nabídky
+              {{ t("$.layout.smarter_offers") }}
             </div>
-            <p class="group-data-[collapsed=true]:hidden">Propojujte zákaznické profily s vhodným sortimentem.</p>
+            <p class="group-data-[collapsed=true]:hidden">{{ t("$.layout.smarter_offers_description") }}</p>
           </div>
         </template>
       </USidebar>

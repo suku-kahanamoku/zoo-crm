@@ -10,6 +10,7 @@ const emit = defineEmits<{
   add: [files: File[]];
   remove: [index: number];
 }>();
+const { t } = useLang();
 
 const input = useTemplateRef<HTMLInputElement>("input");
 const dragging = ref(false);
@@ -53,8 +54,8 @@ function formatSize(size: number) {
       @drop.prevent="onDrop"
     >
       <UIcon name="i-heroicons-photo" class="mb-3 size-10 text-primary-600" />
-      <span class="font-semibold">Přetáhněte obrázky nebo klikněte pro výběr</span>
-      <span class="mt-1 text-sm text-slate-500">JPG, PNG nebo WEBP, maximálně 10 MB</span>
+      <span class="font-semibold">{{ t("$.upload.drop_images") }}</span>
+      <span class="mt-1 text-sm text-slate-500">{{ t("$.upload.image_limits") }}</span>
     </button>
 
     <div v-if="files.length" class="space-y-2">
@@ -82,7 +83,7 @@ function formatSize(size: number) {
           color="error"
           variant="ghost"
           :disabled="file.status === 'uploading'"
-          aria-label="Odebrat soubor"
+          :aria-label="t('$.upload.remove_file')"
           @click="emit('remove', index)"
         />
       </div>

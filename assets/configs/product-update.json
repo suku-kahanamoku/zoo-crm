@@ -1,7 +1,9 @@
 {
   "syscode": "admin-product-update",
   "restUrl": "/api/admin/product/${route.meta.id}",
-  "patchUrl": "/api/admin/product/${route.meta.id}",
+  "patchUrl": "/api/admin/product/${item.id}",
+  "fileCommitUrl": "/api/files/commit",
+  "filePatchUrl": "/api/admin/product/${item.id}",
   "method": "PATCH",
   "fields": [
     { "name": "name", "type": "text", "label": "$.product.name", "required": true },

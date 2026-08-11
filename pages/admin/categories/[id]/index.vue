@@ -1,21 +1,28 @@
 <script setup lang="ts">
+import configSource from "@/assets/configs/category-detail.json";
 import type { IAnimalCategory, IProduct } from "@/types/crm";
 
-definePageMeta({ layout: "admin", syscode: "admin_categories_detail", title: "$.admin.category_detail" });
-const { t } = useLang();
+definePageMeta({
+  layout: "admin",
+  syscode: "admin_categories_detail",
+  title: "$.admin.category_detail",
+});
+const { t, locale } = useLang();
 const route = useRoute();
 const localePath = useLocalePath();
 const resourceId = useResourceId();
-const { data: response, pending } = useAsyncData(
-  () => `category-detail-${resourceId.value}`,
-  () => useApi(`/api/admin/category/${resourceId.value}`),
-  { watch: [resourceId] },
+const { config, response, loading: pending } = useAdminResource<IAnimalCategory>(configSource, "admin_categories");
+const categoriesUrl = computed(() => config.value?.relations?.categories?.restUrl as string | undefined);
+const productsUrl = computed(() => config.value?.relations?.products?.restUrl as string | undefined);
+const { data: categoriesResponse } = useAsyncData(
+  () => `${config.value?.syscode || "category-detail"}-categories`,
+  () => categoriesUrl.value ? useApi(categoriesUrl.value) : Promise.resolve({}),
+  { watch: [categoriesUrl] },
 );
-const { data: categoriesResponse } = useAsyncData("category-detail-categories", () =>
-  useApi("/api/admin/category?limit=100"),
-);
-const { data: productsResponse } = useAsyncData("category-detail-products", () =>
-  useApi("/api/admin/product?limit=100"),
+const { data: productsResponse } = useAsyncData(
+  () => `${config.value?.syscode || "category-detail"}-products`,
+  () => productsUrl.value ? useApi(productsUrl.value) : Promise.resolve({}),
+  { watch: [productsUrl] },
 );
 const category = computed(() => (response.value as any)?.data as IAnimalCategory | undefined);
 const parent = computed(() =>
@@ -28,7 +35,10 @@ const products = computed(() =>
     (item.category_ids || []).includes(resourceId.value),
   ),
 );
-const editPath = computed(() => localePath(`${route.path}/edit`));
+const editPath = computed(() => {
+  const path = route.path.replace(new RegExp(`^/${locale.value}(?=/|$)`), "");
+  return localePath(`${path}/edit`);
+});
 useHead({ title: computed(() => category.value?.name || t("$.admin.category_detail")) });
 </script>
 

@@ -3,14 +3,32 @@
     "base": {
       "title": "Zoo CRM",
       "description": "Správa klientů a sortimentu e-shopu pro domácí zvířata",
-      "workspace": "Zákaznické centrum"
+      "workspace": "Zákaznické centrum",
+      "smart_profiles": "Chytré profily"
     },
+    "language": { "change": "Změnit jazyk" },
+    "layout": {
+      "crm_online": "CRM online",
+      "toggle_color_mode": "Přepnout barevný režim",
+      "smarter_offers": "Chytřejší nabídky",
+      "smarter_offers_description": "Propojujte zákaznické profily s vhodným sortimentem."
+    },
+    "breadcrumb": { "create": "Nový záznam", "edit": "Úprava" },
     "navbar": { "logout": "Odhlásit" },
     "login": {
       "title": "Přihlášení do Zoo CRM",
       "label": "Přihlášení",
       "description": "Přihlaste se administrátorským účtem",
-      "keywords": "zoo crm"
+      "keywords": "zoo crm",
+      "failed": "Přihlášení se nezdařilo",
+      "hero_eyebrow": "Chytré zákaznické profily",
+      "hero_title": "Poznejte své klienty. Nabídněte jim to pravé.",
+      "hero_description": "Jednoduché CRM pro segmentaci zákazníků, správu sortimentu a cílená produktová doporučení.",
+      "feature_profiles": "Profily klientů",
+      "feature_catalogue": "Chytrý sortiment",
+      "feature_recommendations": "Doporučení",
+      "secure_access": "Bezpečný přístup",
+      "authorized_only": "Přístup je určen pouze oprávněným pracovníkům."
     },
     "admin": {
       "title": "Dashboard",
@@ -27,6 +45,33 @@
       "new_category": "Nový druh zvířete",
       "category_detail": "Detail kategorie",
       "edit_category": "Editace druhu zvířete"
+    },
+    "dashboard": {
+      "administrator": "administrátore",
+      "eyebrow": "Řídicí centrum Zoo CRM",
+      "greeting": "Dobrý den, {name}.",
+      "description": "Mějte klientské profily, sortiment a chytrá doporučení na jednom místě. Přehledně a bez zbytečného hledání.",
+      "browse_catalogue": "Projít sortiment",
+      "recent_activity": "Poslední aktivita",
+      "new_customers": "Noví klienti",
+      "all_customers": "Všichni klienti",
+      "no_customers": "Zatím nejsou evidováni žádní klienti.",
+      "catalogue": "Sortiment",
+      "latest_products": "Poslední produkty",
+      "no_products": "Zatím nejsou evidovány žádné produkty."
+    },
+    "section": {
+      "customer_profiles": "Klientské profily",
+      "create_customer_description": "Založte účet a doplňte základní informace pro budoucí personalizaci nabídky.",
+      "catalogue_management": "Správa sortimentu",
+      "create_product_description": "Přidejte produkt, zařaďte jej ke zvířatům a připravte ho pro cílená doporučení.",
+      "catalogue_taxonomy": "Taxonomie sortimentu",
+      "create_category_description": "Vytvořte přehlednou skupinu produktů podle zvířete nebo konkrétní potřeby."
+    },
+    "upload": {
+      "drop_images": "Přetáhněte obrázky nebo klikněte pro výběr",
+      "image_limits": "JPG, PNG nebo WEBP, maximálně 10 MB",
+      "remove_file": "Odebrat soubor"
     },
     "client": {
       "first_name": "Jméno",
@@ -110,6 +155,7 @@
       "switch_aria": "Přepnout mezi tabulkou a kartami",
       "actions": "Akce",
       "loading": "Načítám data…",
+      "load_error": "Data záznamu se nepodařilo načíst.",
       "empty": "Žádné záznamy neodpovídají zadání.",
       "records_count": "Celkem záznamů: {count}",
       "client_description": "Segmentujte zákazníky, sledujte jejich potřeby a připravujte přesnější nabídky.",

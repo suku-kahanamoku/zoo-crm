@@ -53,22 +53,35 @@ const filterAccordion = computed(() => [
   },
 ]);
 
-const { data: clientTypeResponse } = useAsyncData(
-  "zoo-client-type-options",
-  () =>
-    useApi(
-      "/api/admin/enumeration?limit=100&q=%7B%22type%22%3A%7B%22value%22%3A%22client_type%22%7D%7D",
-    ),
+const { data: remoteOptions } = useAsyncData(
+  () => `${config.value?.syscode || props.listRouteSyscode}-filter-options`,
+  async () => {
+    const entries = await Promise.all(
+      fields.value
+        .filter((field) => field.restOptions?.url)
+        .map(async (field) => {
+          const result = await useApi(field.restOptions.url);
+          return [field.name, (result as any)?.data || []] as const;
+        }),
+    );
+    return Object.fromEntries(entries);
+  },
+  { watch: [config] },
 );
-const clientTypes = computed(() => ((clientTypeResponse.value as any)?.data || []) as Record<string, any>[]);
-
-const { data: categoryResponse } = useAsyncData("zoo-category-options", () =>
-  useApi("/api/admin/category?limit=100"),
+const categoryRelation = computed(() => config.value?.relations?.categories as Record<string, any> | undefined);
+const { data: categoryResponse } = useAsyncData(
+  () => `${config.value?.syscode || props.listRouteSyscode}-category-options`,
+  () => categoryRelation.value?.restUrl ? useApi(categoryRelation.value.restUrl) : Promise.resolve({}),
+  { watch: [categoryRelation] },
 );
 const categories = computed(() => ((categoryResponse.value as any)?.data || []) as Record<string, any>[]);
-const categoryMap = computed(() =>
-  Object.fromEntries(categories.value.map((category) => [Number(category.id), category.name])),
-);
+const categoryMap = computed(() => {
+  const valueKey = categoryRelation.value?.value || "id";
+  const labelKey = categoryRelation.value?.label || "name";
+  return Object.fromEntries(
+    categories.value.map((category) => [Number(category[valueKey]), category[labelKey]]),
+  );
+});
 
 watch(
   fields,
@@ -101,8 +114,11 @@ function formatValue(item: Record<string, any>, field: Record<string, any>): str
 }
 
 function filterOptions(field: Record<string, any>): Record<string, any>[] {
-  if (field.name === "client_type_id") {
-    return clientTypes.value.map((item) => ({ label: item.label, value: Number(item.id) }));
+  if (field.restOptions) {
+    return (((remoteOptions.value as any)?.[field.name] || []) as Record<string, any>[]).map((item) => ({
+      label: item[field.restOptions.label || "label"],
+      value: item[field.restOptions.value || "value"],
+    }));
   }
   return (field.options || []).map((option: Record<string, any>) => ({
     ...option,

@@ -4,6 +4,13 @@
   "deleteUrl": "/api/admin/product/${item.id}",
   "pagination": { "limit": 20 },
   "factory": { "url": "${name}--$${id}" },
+  "relations": {
+    "categories": {
+      "restUrl": "/api/admin/category?limit=100",
+      "label": "name",
+      "value": "id"
+    }
+  },
   "fields": [
     {
       "name": "name",

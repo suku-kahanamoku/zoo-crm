@@ -1,23 +1,27 @@
 <script setup lang="ts">
+import configSource from "@/assets/configs/product-detail.json";
 import type { IAnimalCategory, IProduct } from "@/types/crm";
 
-definePageMeta({ layout: "admin", syscode: "admin_products_detail", title: "$.admin.product_detail" });
-const { t } = useLang();
+definePageMeta({
+  layout: "admin",
+  syscode: "admin_products_detail",
+  title: "$.admin.product_detail",
+});
+const { t, locale } = useLang();
 const route = useRoute();
 const localePath = useLocalePath();
-const resourceId = useResourceId();
-const { data: response, pending } = useAsyncData(
-  () => `product-detail-${resourceId.value}`,
-  () => useApi(`/api/admin/product/${resourceId.value}`),
-  { watch: [resourceId] },
+const { config, response, loading: pending } = useAdminResource<IProduct>(configSource, "admin_products");
+const categoriesUrl = computed(() => config.value?.relations?.categories?.restUrl as string | undefined);
+const clientTypesUrl = computed(() => config.value?.relations?.clientTypes?.restUrl as string | undefined);
+const { data: categoriesResponse } = useAsyncData(
+  () => `${config.value?.syscode || "product-detail"}-categories`,
+  () => categoriesUrl.value ? useApi(categoriesUrl.value) : Promise.resolve({}),
+  { watch: [categoriesUrl] },
 );
-const { data: categoriesResponse } = useAsyncData("product-detail-categories", () =>
-  useApi("/api/admin/category?limit=100"),
-);
-const { data: clientTypesResponse } = useAsyncData("product-detail-client-types", () =>
-  useApi(
-    "/api/admin/enumeration?limit=100&q=%7B%22type%22%3A%7B%22value%22%3A%22client_type%22%7D%7D",
-  ),
+const { data: clientTypesResponse } = useAsyncData(
+  () => `${config.value?.syscode || "product-detail"}-client-types`,
+  () => clientTypesUrl.value ? useApi(clientTypesUrl.value) : Promise.resolve({}),
+  { watch: [clientTypesUrl] },
 );
 const product = computed(() => (response.value as any)?.data as IProduct | undefined);
 const categories = computed(() => {
@@ -32,9 +36,12 @@ const targetSegments = computed(() => {
     codes.includes(item.syscode),
   );
 });
-const editPath = computed(() => localePath(`${route.path}/edit`));
+const editPath = computed(() => {
+  const path = route.path.replace(new RegExp(`^/${locale.value}(?=/|$)`), "");
+  return localePath(`${path}/edit`);
+});
 const money = (value: number) =>
-  new Intl.NumberFormat("cs-CZ", { style: "currency", currency: "CZK" }).format(value);
+  new Intl.NumberFormat(locale.value === "en" ? "en-GB" : "cs-CZ", { style: "currency", currency: "CZK" }).format(value);
 
 useHead({ title: computed(() => product.value?.name || t("$.admin.product_detail")) });
 </script>

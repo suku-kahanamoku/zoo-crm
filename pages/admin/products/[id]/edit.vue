@@ -1,18 +1,13 @@
 <script setup lang="ts">
 import configSource from "@/assets/configs/product-update.json";
+import { useFileUpload } from "@/composables/useFileUpload";
 import type { IProduct } from "@/types/crm";
 
 definePageMeta({ layout: "admin", syscode: "admin_products_edit", title: "$.admin.edit_product" });
 const { t } = useLang();
 const route = useRoute();
-const resourceId = parseResourceId(route.params.id);
-const formConfig = {
-  ...configSource,
-  restUrl: `/api/admin/product/${resourceId}`,
-  patchUrl: `/api/admin/product/${resourceId}`,
-};
 const { success, error: toastError } = useToastify();
-const { config, response, loading, onSave, refresh } = useAdminResource<IProduct>(formConfig, "admin_products");
+const { config, response, loading, onSave, refresh } = useAdminResource<IProduct>(configSource, "admin_products");
 const product = computed(() => (response.value as any)?.data as IProduct | undefined);
 const { uploadedFiles, uploading, tempPaths, addFiles, removeFile, clearFiles } = useFileUpload();
 const savingFiles = ref(false);
@@ -25,9 +20,10 @@ async function saveFiles() {
   if (!product.value?.id || !tempPaths.value.length) return;
   savingFiles.value = true;
   try {
+    if (!config.value?.fileCommitUrl || !config.value?.filePatchUrl) return;
     const newIds: number[] = [];
     for (const path of tempPaths.value) {
-      const result = await useApi("/api/files/commit", {
+      const result = await useApi(config.value.fileCommitUrl, {
         method: "POST",
         body: {
           path,
@@ -41,7 +37,8 @@ async function saveFiles() {
       if (id) newIds.push(id);
     }
     if (newIds.length) {
-      await useApi(`/api/admin/product/${product.value.id}`, {
+      const patchUrl = useUrl(config.value.filePatchUrl, { route, item: product.value });
+      await useApi(patchUrl, {
         method: "PATCH",
         body: { file_ids: [...(product.value.file_ids || []), ...newIds] },
       });
@@ -61,9 +58,10 @@ useHead({ title: computed(() => t("$.admin.edit_product")) });
 
 <template>
   <div v-if="config" class="mx-auto w-full max-w-5xl px-5 pb-10">
-    <div class="crm-page-heading"><div><p class="crm-eyebrow">Správa sortimentu</p><h1 class="crm-page-title">{{ t('$.admin.edit_product') }}</h1></div></div>
+    <div class="crm-page-heading"><div><p class="crm-eyebrow">{{ t("$.section.catalogue_management") }}</p><h1 class="crm-page-title">{{ t('$.admin.edit_product') }}</h1></div></div>
+    <USkeleton v-if="loading && !product" class="h-96 w-full rounded-2xl" />
     <UTabs
-      v-if="product"
+      v-else-if="product"
       class="crm-form-shell p-4 sm:p-5"
       :items="[
         { label: t('$.product.description'), slot: 'detail', icon: 'i-heroicons-pencil-square' },
@@ -102,5 +100,6 @@ useHead({ title: computed(() => t("$.admin.edit_product")) });
         </div>
       </template>
     </UTabs>
+    <UAlert v-else color="error" variant="subtle" icon="i-heroicons-exclamation-triangle" :title="t('$.view.load_error')" />
   </div>
 </template>

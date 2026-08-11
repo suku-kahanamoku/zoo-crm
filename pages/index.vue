@@ -1,5 +1,6 @@
 <script setup lang="ts">
-await navigateTo("/admin", { redirectCode: 302 });
+const localePath = useLocalePath();
+await navigateTo(localePath("/admin"), { redirectCode: 302 });
 </script>
 
 <template>

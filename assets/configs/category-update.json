@@ -1,7 +1,7 @@
 {
   "syscode": "admin-animal-category-update",
   "restUrl": "/api/admin/category/${route.meta.id}",
-  "patchUrl": "/api/admin/category/${route.meta.id}",
+  "patchUrl": "/api/admin/category/${item.id}",
   "method": "PATCH",
   "fields": [
     {

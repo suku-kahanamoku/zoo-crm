@@ -34,7 +34,12 @@
       "type": "select",
       "label": "$.client.type",
       "filterable": true,
-      "clearable": true
+      "clearable": true,
+      "restOptions": {
+        "url": "/api/admin/enumeration?limit=100&q=%7B%22type%22%3A%7B%22value%22%3A%22client_type%22%7D%7D",
+        "label": "label",
+        "value": "id"
+      }
     },
     {
       "name": "status",

@@ -1,8 +1,30 @@
 {
   "$": {
-    "base": { "title": "Zoo CRM", "description": "Pet shop customer and catalogue management", "workspace": "Customer workspace" },
+    "base": { "title": "Zoo CRM", "description": "Pet shop customer and catalogue management", "workspace": "Customer workspace", "smart_profiles": "Smart profiles" },
+    "language": { "change": "Change language" },
+    "layout": {
+      "crm_online": "CRM online",
+      "toggle_color_mode": "Toggle colour mode",
+      "smarter_offers": "Smarter offers",
+      "smarter_offers_description": "Match customer profiles with the right products."
+    },
+    "breadcrumb": { "create": "New record", "edit": "Edit" },
     "navbar": { "logout": "Sign out" },
-    "login": { "title": "Zoo CRM sign in", "label": "Sign in", "description": "Sign in with an administrator account", "keywords": "zoo crm" },
+    "login": {
+      "title": "Zoo CRM sign in",
+      "label": "Sign in",
+      "description": "Sign in with an administrator account",
+      "keywords": "zoo crm",
+      "failed": "Sign in failed",
+      "hero_eyebrow": "Smart customer profiles",
+      "hero_title": "Know your customers. Offer them exactly what they need.",
+      "hero_description": "A simple CRM for customer segmentation, catalogue management and targeted product recommendations.",
+      "feature_profiles": "Customer profiles",
+      "feature_catalogue": "Smart catalogue",
+      "feature_recommendations": "Recommendations",
+      "secure_access": "Secure access",
+      "authorized_only": "Access is restricted to authorised staff only."
+    },
     "admin": {
       "title": "Dashboard",
       "subtitle": "Overview of your pet shop customers and catalogue",
@@ -18,6 +40,33 @@
       "new_category": "New animal type",
       "category_detail": "Category detail",
       "edit_category": "Edit animal type"
+    },
+    "dashboard": {
+      "administrator": "administrator",
+      "eyebrow": "Zoo CRM control centre",
+      "greeting": "Hello, {name}.",
+      "description": "Keep customer profiles, your catalogue and smart recommendations in one place. Clear and easy to find.",
+      "browse_catalogue": "Browse catalogue",
+      "recent_activity": "Recent activity",
+      "new_customers": "New customers",
+      "all_customers": "All customers",
+      "no_customers": "No customers have been added yet.",
+      "catalogue": "Catalogue",
+      "latest_products": "Latest products",
+      "no_products": "No products have been added yet."
+    },
+    "section": {
+      "customer_profiles": "Customer profiles",
+      "create_customer_description": "Create an account and add the basic information needed for future offer personalisation.",
+      "catalogue_management": "Catalogue management",
+      "create_product_description": "Add a product, assign it to animals and prepare it for targeted recommendations.",
+      "catalogue_taxonomy": "Catalogue taxonomy",
+      "create_category_description": "Create a clear product group based on an animal or a specific need."
+    },
+    "upload": {
+      "drop_images": "Drop images here or click to select",
+      "image_limits": "JPG, PNG or WEBP, up to 10 MB",
+      "remove_file": "Remove file"
     },
     "client": {
       "first_name": "First name", "last_name": "Last name", "email": "E-mail", "phone": "Phone",
@@ -49,7 +98,7 @@
     "filter": { "title": "Filter overview", "all": "All options", "apply": "Apply filter", "reset": "Clear" },
     "view": {
       "table": "Table", "cards": "Cards", "switch_aria": "Switch between table and cards", "actions": "Actions",
-      "loading": "Loading data…", "empty": "No records match the criteria.", "records_count": "Total records: {count}",
+      "loading": "Loading data…", "load_error": "The record could not be loaded.", "empty": "No records match the criteria.", "records_count": "Total records: {count}",
       "client_description": "Segment customers, understand their needs and create more relevant offers.",
       "product_description": "Manage assortment, availability and products for individual customer segments.",
       "category_description": "Maintain a clear assortment taxonomy by animals and their needs."
