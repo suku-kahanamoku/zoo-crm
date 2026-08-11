@@ -1,8 +1,9 @@
 <template>
-  <NuxtLink to="/admin" class="flex items-center gap-3" aria-label="Zoo CRM">
+  <NuxtLink to="/admin" class="group flex items-center gap-3" aria-label="Zoo CRM">
     <span
-      class="grid size-10 place-items-center rounded-xl bg-primary-600 text-white shadow-sm"
+      class="relative grid size-11 place-items-center overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500 to-primary-800 text-white shadow-lg shadow-primary/25 transition group-hover:-rotate-3 group-hover:scale-105"
     >
+      <span class="absolute inset-x-1 top-0 h-px bg-white/70" />
       <UIcon name="i-lucide-paw-print" class="size-6" />
     </span>
     <span class="leading-tight">
@@ -10,7 +11,7 @@
         Zoo CRM
       </span>
       <span class="block text-[10px] font-bold uppercase tracking-[0.2em] text-primary-600">
-        Pet shop
+        Chytré profily
       </span>
     </span>
   </NuxtLink>

@@ -13,13 +13,15 @@ useHead({ title: computed(() => t("$.admin.new_category")) });
 
 <template>
   <div v-if="config" class="mx-auto w-full max-w-4xl px-5 pb-10">
-    <UPageHeader :title="t('$.admin.new_category')" class="border-none" />
-    <CmpForm
-      :fields="config.fields"
-      :loading="loading"
-      :actions="{ no: { link: { path: '/admin/categories' } } }"
-      :ui="{ body: 'grid gap-4' }"
-      @submit="submit"
-    />
+    <div class="crm-page-heading"><div><p class="crm-eyebrow">Taxonomie sortimentu</p><h1 class="crm-page-title">{{ t('$.admin.new_category') }}</h1><p class="mt-2 text-sm text-muted">Vytvořte přehlednou skupinu produktů podle zvířete nebo konkrétní potřeby.</p></div></div>
+    <div class="crm-form-shell p-2">
+      <CmpForm
+        :fields="config.fields"
+        :loading="loading"
+        :actions="{ no: { link: { path: '/admin/categories' } } }"
+        :ui="{ root: 'border-0 bg-transparent shadow-none', body: 'grid gap-5' }"
+        @submit="submit"
+      />
+    </div>
   </div>
 </template>

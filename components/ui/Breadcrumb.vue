@@ -8,6 +8,7 @@ const labels: Record<string, string> = {
   products: "Produkty",
   categories: "Druhy zvířat",
   create: "Nový záznam",
+  edit: "Úprava",
 };
 
 const items = computed(() => {
@@ -26,5 +27,9 @@ const items = computed(() => {
 </script>
 
 <template>
-  <UBreadcrumb :items="items" />
+  <UBreadcrumb
+    :items="items"
+    class="w-fit rounded-full border border-default/70 bg-default/75 px-3 py-1.5 shadow-sm backdrop-blur"
+    :ui="{ link: 'text-xs font-semibold', separatorIcon: 'size-3.5' }"
+  />
 </template>

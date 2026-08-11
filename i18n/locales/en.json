@@ -1,6 +1,6 @@
 {
   "$": {
-    "base": { "title": "Zoo CRM", "description": "Pet shop customer and catalogue management" },
+    "base": { "title": "Zoo CRM", "description": "Pet shop customer and catalogue management", "workspace": "Customer workspace" },
     "navbar": { "logout": "Sign out" },
     "login": { "title": "Zoo CRM sign in", "label": "Sign in", "description": "Sign in with an administrator account", "keywords": "zoo crm" },
     "admin": {
@@ -47,7 +47,13 @@
     },
     "status": { "active": "Active", "inactive": "Inactive", "banned": "Blocked" },
     "filter": { "title": "Filter overview", "all": "All options", "apply": "Apply filter", "reset": "Clear" },
-    "view": { "table": "Table", "cards": "Cards", "actions": "Actions", "loading": "Loading data…", "empty": "No records match the criteria." },
+    "view": {
+      "table": "Table", "cards": "Cards", "switch_aria": "Switch between table and cards", "actions": "Actions",
+      "loading": "Loading data…", "empty": "No records match the criteria.", "records_count": "Total records: {count}",
+      "client_description": "Segment customers, understand their needs and create more relevant offers.",
+      "product_description": "Manage assortment, availability and products for individual customer segments.",
+      "category_description": "Maintain a clear assortment taxonomy by animals and their needs."
+    },
     "form": { "yes": "Yes", "no": "No", "delete_success_msg": "Record deleted successfully" },
     "btn": { "delete": "Delete", "submit": "Save", "cancel": "Cancel", "edit": "Edit", "show_detail": "View detail", "back_to_list": "Back to overview" },
     "message": { "delete_question": "Delete “{name}”?", "delete_question_multi": "Delete {length} records?" },

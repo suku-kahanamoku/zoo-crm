@@ -2,7 +2,8 @@
   "$": {
     "base": {
       "title": "Zoo CRM",
-      "description": "Správa klientů a sortimentu e-shopu pro domácí zvířata"
+      "description": "Správa klientů a sortimentu e-shopu pro domácí zvířata",
+      "workspace": "Zákaznické centrum"
     },
     "navbar": { "logout": "Odhlásit" },
     "login": {
@@ -103,7 +104,18 @@
     },
     "status": { "active": "Aktivní", "inactive": "Neaktivní", "banned": "Blokovaný" },
     "filter": { "title": "Filtrovat přehled", "all": "Všechny možnosti", "apply": "Použít filtr", "reset": "Vymazat" },
-    "view": { "table": "Tabulka", "cards": "Karty", "actions": "Akce", "loading": "Načítám data…", "empty": "Žádné záznamy neodpovídají zadání." },
+    "view": {
+      "table": "Tabulka",
+      "cards": "Karty",
+      "switch_aria": "Přepnout mezi tabulkou a kartami",
+      "actions": "Akce",
+      "loading": "Načítám data…",
+      "empty": "Žádné záznamy neodpovídají zadání.",
+      "records_count": "Celkem záznamů: {count}",
+      "client_description": "Segmentujte zákazníky, sledujte jejich potřeby a připravujte přesnější nabídky.",
+      "product_description": "Spravujte sortiment, dostupnost a produkty vhodné pro jednotlivé zákaznické segmenty.",
+      "category_description": "Udržujte přehlednou taxonomii sortimentu podle zvířat a jejich potřeb."
+    },
     "form": {
       "yes": "Ano",
       "no": "Ne",

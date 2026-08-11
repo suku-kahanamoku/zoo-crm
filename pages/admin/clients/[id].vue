@@ -5,7 +5,7 @@ definePageMeta({ layout: "admin", syscode: "admin_clients_detail", title: "$.adm
 const { t } = useLang();
 const route = useRoute();
 const localePath = useLocalePath();
-const resourceId = computed(() => Number(String(route.params.id).split("--").pop()));
+const resourceId = useResourceId();
 const { data: response, pending } = useAsyncData(
   () => `client-detail-${resourceId.value}`,
   () => useApi(`/api/admin/client/${resourceId.value}`),
@@ -33,10 +33,10 @@ useHead({ title: fullName });
 
 <template>
   <div class="mx-auto w-full max-w-6xl space-y-5 px-5 pb-10">
-    <div class="flex flex-wrap items-center justify-between gap-3 pt-6">
+    <div class="crm-page-heading flex-wrap">
       <div>
         <p class="text-sm font-semibold text-primary">{{ t("$.admin.client_detail") }}</p>
-        <h1 class="text-3xl font-extrabold text-highlighted">{{ fullName }}</h1>
+        <h1 class="crm-page-title">{{ fullName }}</h1>
       </div>
       <div class="flex gap-2">
         <UButton :to="localePath('/admin/clients')" color="neutral" variant="outline" icon="i-heroicons-arrow-left">

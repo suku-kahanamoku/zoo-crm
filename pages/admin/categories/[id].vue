@@ -5,7 +5,7 @@ definePageMeta({ layout: "admin", syscode: "admin_categories_detail", title: "$.
 const { t } = useLang();
 const route = useRoute();
 const localePath = useLocalePath();
-const resourceId = computed(() => Number(String(route.params.id).split("--").pop()));
+const resourceId = useResourceId();
 const { data: response, pending } = useAsyncData(
   () => `category-detail-${resourceId.value}`,
   () => useApi(`/api/admin/category/${resourceId.value}`),
@@ -34,10 +34,10 @@ useHead({ title: computed(() => category.value?.name || t("$.admin.category_deta
 
 <template>
   <div class="mx-auto w-full max-w-5xl space-y-5 px-5 pb-10">
-    <div class="flex flex-wrap items-center justify-between gap-3 pt-6">
+    <div class="crm-page-heading flex-wrap">
       <div>
         <p class="text-sm font-semibold text-primary">{{ t("$.admin.category_detail") }}</p>
-        <h1 class="text-3xl font-extrabold text-highlighted">{{ category?.name || t("$.view.loading") }}</h1>
+        <h1 class="crm-page-title">{{ category?.name || t("$.view.loading") }}</h1>
       </div>
       <div class="flex gap-2">
         <UButton :to="localePath('/admin/categories')" color="neutral" variant="outline" icon="i-heroicons-arrow-left">

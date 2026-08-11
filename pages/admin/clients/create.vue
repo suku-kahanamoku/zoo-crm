@@ -13,13 +13,15 @@ useHead({ title: computed(() => t("$.admin.new_client")) });
 
 <template>
   <div v-if="config" class="mx-auto w-full max-w-5xl px-5 pb-10">
-    <UPageHeader :title="t('$.admin.new_client')" class="border-none" />
-    <CmpForm
-      :fields="config.fields"
-      :loading="loading"
-      :actions="{ no: { link: { path: '/admin/clients' } } }"
-      :ui="{ body: 'grid gap-4 md:grid-cols-2' }"
-      @submit="submit"
-    />
+    <div class="crm-page-heading"><div><p class="crm-eyebrow">Klientské profily</p><h1 class="crm-page-title">{{ t('$.admin.new_client') }}</h1><p class="mt-2 text-sm text-muted">Založte účet a doplňte základní informace pro budoucí personalizaci nabídky.</p></div></div>
+    <div class="crm-form-shell p-2">
+      <CmpForm
+        :fields="config.fields"
+        :loading="loading"
+        :actions="{ no: { link: { path: '/admin/clients' } } }"
+        :ui="{ root: 'border-0 bg-transparent shadow-none', body: 'grid gap-5 md:grid-cols-2' }"
+        @submit="submit"
+      />
+    </div>
   </div>
 </template>

@@ -27,6 +27,12 @@ const {
 } = useAdminResource<Record<string, any>>(props.config, props.listRouteSyscode);
 
 const viewMode = ref<"table" | "cards">("table");
+const cardViewEnabled = computed({
+  get: () => viewMode.value === "cards",
+  set: (enabled: boolean) => {
+    viewMode.value = enabled ? "cards" : "table";
+  },
+});
 const filterDraft = reactive<Record<string, any>>({});
 const rows = computed(() => ((response.value as any)?.data || []) as Record<string, any>[]);
 const fields = computed(() => (config.value?.fields || []) as Record<string, any>[]);
@@ -149,7 +155,24 @@ async function confirmDelete(confirmed: boolean) {
 
 <template>
   <div v-if="config" class="mx-auto w-full max-w-7xl px-5 pb-10">
-    <UPageHeader :title="title" class="border-none" />
+    <div class="crm-page-heading">
+      <div>
+        <p class="crm-eyebrow">{{ t("$.base.workspace") }}</p>
+        <h1 class="crm-page-title">{{ title }}</h1>
+        <p class="mt-2 max-w-2xl text-sm text-muted">{{ t(`$.view.${resource}_description`) }}</p>
+      </div>
+      <div class="crm-view-switcher">
+        <span :class="viewMode === 'table' ? 'text-highlighted' : 'text-muted'" class="inline-flex items-center gap-1.5 text-sm font-bold">
+          <UIcon name="i-heroicons-table-cells" class="size-4" />
+          {{ t("$.view.table") }}
+        </span>
+        <USwitch v-model="cardViewEnabled" color="primary" :aria-label="t('$.view.switch_aria')" />
+        <span :class="viewMode === 'cards' ? 'text-highlighted' : 'text-muted'" class="inline-flex items-center gap-1.5 text-sm font-bold">
+          <UIcon name="i-heroicons-squares-2x2" class="size-4" />
+          {{ t("$.view.cards") }}
+        </span>
+      </div>
+    </div>
 
     <UAccordion :items="filterAccordion" class="mb-4 rounded-xl border border-default bg-default px-4">
       <template #body>
@@ -182,26 +205,9 @@ async function confirmDelete(confirmed: boolean) {
     </UAccordion>
 
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex rounded-lg border border-default p-1">
-        <UButton
-          icon="i-heroicons-table-cells"
-          color="neutral"
-          :variant="viewMode === 'table' ? 'soft' : 'ghost'"
-          size="sm"
-          @click="viewMode = 'table'"
-        >
-          {{ t("$.view.table") }}
-        </UButton>
-        <UButton
-          icon="i-heroicons-squares-2x2"
-          color="neutral"
-          :variant="viewMode === 'cards' ? 'soft' : 'ghost'"
-          size="sm"
-          @click="viewMode = 'cards'"
-        >
-          {{ t("$.view.cards") }}
-        </UButton>
-      </div>
+      <p class="text-sm font-semibold text-muted">
+        {{ t("$.view.records_count", { count: meta?.total ?? rows.length }) }}
+      </p>
       <div class="flex gap-2">
         <UButton
           icon="i-heroicons-trash"
@@ -222,7 +228,7 @@ async function confirmDelete(confirmed: boolean) {
       </div>
     </div>
 
-    <div v-if="viewMode === 'table'" class="overflow-hidden rounded-xl border border-default bg-default">
+    <div v-if="viewMode === 'table'" class="crm-data-panel overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-sm">
           <thead class="border-b border-default bg-elevated/60 text-xs uppercase tracking-wide text-muted">
@@ -247,7 +253,7 @@ async function confirmDelete(confirmed: boolean) {
             <tr
               v-for="item in rows"
               :key="item.id"
-              class="cursor-pointer border-b border-default transition-colors last:border-b-0 hover:bg-elevated/60"
+              class="group cursor-pointer border-b border-default transition-colors last:border-b-0 hover:bg-primary/5"
               @click="navigateTo(detailUrl(item))"
             >
               <td class="px-4 py-3" @click.stop>
@@ -283,7 +289,7 @@ async function confirmDelete(confirmed: boolean) {
       <UCard
         v-for="item in rows"
         :key="item.id"
-        class="cursor-pointer transition hover:-translate-y-0.5 hover:shadow-lg"
+        class="crm-record-card cursor-pointer transition duration-300 hover:-translate-y-1 hover:shadow-xl"
         @click="navigateTo(detailUrl(item))"
       >
         <div class="flex items-start justify-between gap-3">

@@ -5,7 +5,7 @@ import type { IAnimalCategory } from "@/types/crm";
 definePageMeta({ layout: "admin", syscode: "admin_categories_edit", title: "$.admin.edit_category" });
 const { t } = useLang();
 const route = useRoute();
-const resourceId = Number(String(route.params.id).split("--").pop());
+const resourceId = parseResourceId(route.params.id);
 const formConfig = {
   ...configSource,
   restUrl: `/api/admin/category/${resourceId}`,
@@ -21,15 +21,17 @@ useHead({ title: computed(() => t("$.admin.edit_category")) });
 
 <template>
   <div v-if="config" class="mx-auto w-full max-w-4xl px-5 pb-10">
-    <UPageHeader :title="t('$.admin.edit_category')" class="border-none" />
-    <CmpForm
-      v-if="category"
-      :fields="config.fields"
-      :item="category"
-      :loading="loading"
-      :actions="{ no: { link: { path: route.path.replace(/\/edit$/, '') } } }"
-      :ui="{ body: 'grid gap-4' }"
-      @submit="submit"
-    />
+    <div class="crm-page-heading"><div><p class="crm-eyebrow">Taxonomie sortimentu</p><h1 class="crm-page-title">{{ t('$.admin.edit_category') }}</h1></div></div>
+    <div class="crm-form-shell p-2">
+      <CmpForm
+        v-if="category"
+        :fields="config.fields"
+        :item="category"
+        :loading="loading"
+        :actions="{ no: { link: { path: route.path.replace(/\/edit$/, '') } } }"
+        :ui="{ root: 'border-0 bg-transparent shadow-none', body: 'grid gap-5' }"
+        @submit="submit"
+      />
+    </div>
   </div>
 </template>

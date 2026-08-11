@@ -46,23 +46,41 @@ useSeoMeta({ robots: "noindex, nofollow" });
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-[calc(100vh-5rem)] max-w-7xl items-center justify-center px-5 py-12">
-    <div class="w-full max-w-md">
-      <div class="mb-7 text-center">
-        <p class="text-sm font-bold uppercase tracking-[0.2em] text-primary-600">Pet shop administration</p>
-        <h1 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          {{ t("$.login.title") }}
-        </h1>
+  <div class="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-10 px-5 py-12 lg:grid-cols-[1.1fr_0.9fr]">
+    <section class="hidden lg:block">
+      <div class="crm-hero-panel p-10">
+        <div class="relative z-10 max-w-xl">
+          <span class="mb-7 grid size-16 place-items-center rounded-2xl bg-white/15 shadow-xl backdrop-blur">
+            <UIcon name="i-lucide-paw-print" class="size-9" />
+          </span>
+          <p class="text-xs font-extrabold uppercase tracking-[0.22em] text-emerald-100">Chytré zákaznické profily</p>
+          <h1 class="mt-4 text-5xl font-extrabold leading-tight tracking-tight">Poznejte své klienty. Nabídněte jim to pravé.</h1>
+          <p class="mt-5 text-lg leading-8 text-emerald-50/85">
+            Jednoduché CRM pro segmentaci zákazníků, správu sortimentu a cílená produktová doporučení.
+          </p>
+          <div class="mt-9 grid grid-cols-3 gap-3">
+            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur"><UIcon name="i-heroicons-users" class="mb-3 size-6" /><p class="text-sm font-bold">Profily klientů</p></div>
+            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur"><UIcon name="i-heroicons-shopping-bag" class="mb-3 size-6" /><p class="text-sm font-bold">Chytrý sortiment</p></div>
+            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur"><UIcon name="i-heroicons-sparkles" class="mb-3 size-6" /><p class="text-sm font-bold">Doporučení</p></div>
+          </div>
+        </div>
       </div>
-      <CmpForm
-        :fields="fields"
-        :loading="loading"
-        :ui="{
-          root: 'w-full rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900',
-          body: 'grid gap-4',
-        }"
-        @submit="submit"
-      />
-    </div>
+    </section>
+    <section class="mx-auto w-full max-w-md">
+      <div class="mb-8">
+        <p class="crm-eyebrow">Bezpečný přístup</p>
+        <h1 class="crm-page-title">{{ t("$.login.title") }}</h1>
+        <p class="mt-3 text-muted">{{ t("$.login.description") }}</p>
+      </div>
+      <div class="crm-form-shell p-2">
+        <CmpForm
+          :fields="fields"
+          :loading="loading"
+          :ui="{ root: 'w-full border-0 bg-transparent p-5 shadow-none', body: 'grid gap-5' }"
+          @submit="submit"
+        />
+      </div>
+      <p class="mt-5 text-center text-xs text-muted">Přístup je určen pouze oprávněným pracovníkům.</p>
+    </section>
   </div>
 </template>

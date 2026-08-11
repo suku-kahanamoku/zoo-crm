@@ -5,7 +5,7 @@ import type { IProduct } from "@/types/crm";
 definePageMeta({ layout: "admin", syscode: "admin_products_edit", title: "$.admin.edit_product" });
 const { t } = useLang();
 const route = useRoute();
-const resourceId = Number(String(route.params.id).split("--").pop());
+const resourceId = parseResourceId(route.params.id);
 const formConfig = {
   ...configSource,
   restUrl: `/api/admin/product/${resourceId}`,
@@ -61,9 +61,10 @@ useHead({ title: computed(() => t("$.admin.edit_product")) });
 
 <template>
   <div v-if="config" class="mx-auto w-full max-w-5xl px-5 pb-10">
-    <UPageHeader :title="t('$.admin.edit_product')" class="border-none" />
+    <div class="crm-page-heading"><div><p class="crm-eyebrow">Správa sortimentu</p><h1 class="crm-page-title">{{ t('$.admin.edit_product') }}</h1></div></div>
     <UTabs
       v-if="product"
+      class="crm-form-shell p-4 sm:p-5"
       :items="[
         { label: t('$.product.description'), slot: 'detail', icon: 'i-heroicons-pencil-square' },
         { label: t('$.product.images'), slot: 'images', icon: 'i-heroicons-photo' }
@@ -76,7 +77,7 @@ useHead({ title: computed(() => t("$.admin.edit_product")) });
             :item="product"
             :loading="loading"
             :actions="{ no: { link: { path: route.path.replace(/\/edit$/, '') } } }"
-            :ui="{ body: 'grid gap-4 md:grid-cols-2' }"
+            :ui="{ root: 'border-0 bg-transparent shadow-none', body: 'grid gap-5 md:grid-cols-2' }"
             @submit="submit"
           />
         </div>
