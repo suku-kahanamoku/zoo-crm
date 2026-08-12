@@ -9,6 +9,18 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
+  hooks: {
+    "components:extend": (components) => {
+      queueMicrotask(() => {
+        for (let index = components.length - 1; index >= 0; index -= 1) {
+          if (components[index]?.pascalName === "NuxtPicture") {
+            components.splice(index, 1);
+          }
+        }
+      });
+    },
+  },
+
   colorMode: {
     classSuffix: "",
     preference: "light",
@@ -17,6 +29,8 @@ export default defineNuxtConfig({
 
   modules: [
     "@nuxt/image",
+    "nuxt-site-config",
+    "@suku-kahanamoku/seo-module",
     "@suku-kahanamoku/auth-module",
     "@suku-kahanamoku/menu-module",
     "@suku-kahanamoku/form-module",
@@ -41,8 +55,7 @@ export default defineNuxtConfig({
     phpFileRoot:
       process.env.PHP_FILE_ROOT || "/home/suku/Workspace/php/php-core",
     public: {
-      frontendHost:
-        process.env.FRONTEND_HOST || "http://zoo.localhost:3000",
+      frontendHost: process.env.FRONTEND_HOST || "http://zoo.localhost:3000",
     },
   },
 

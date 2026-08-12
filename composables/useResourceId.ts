@@ -16,7 +16,10 @@ export function parseResourceId(value: string | string[] | undefined): number {
   const id = match ? Number(match[1]) : Number.NaN;
 
   if (!Number.isSafeInteger(id) || id < 1) {
-    throw createError({ statusCode: 404, statusMessage: "Záznam nebyl nalezen" });
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Záznam nebyl nalezen",
+    });
   }
 
   return id;

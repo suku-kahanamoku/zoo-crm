@@ -1,7 +1,7 @@
 import type { IFormConfig } from "@suku-kahanamoku/form-module/types";
 import { CLONE } from "@suku-kahanamoku/common-module/utils";
 
-export function useAdminResource<T extends { id?: number }>(
+export function useAdminResource<T extends { id?: number | string }>(
   resourceConfig: Record<string, any>,
   listRouteSyscode: string,
 ) {
@@ -15,7 +15,9 @@ export function useAdminResource<T extends { id?: number }>(
   const selected = ref<T[]>([]);
   const deleteDialogOpen = ref(false);
   const resourceId = computed(() =>
-    route.params?.id ? parseResourceId(route.params.id as string | string[]) : undefined,
+    route.params?.id
+      ? parseResourceId(route.params.id as string | string[])
+      : undefined,
   );
   const resolvedRoute = computed(() =>
     resourceId.value
@@ -34,7 +36,8 @@ export function useAdminResource<T extends { id?: number }>(
     pending: loading,
     refresh,
   } = useAsyncData(
-    () => `${config.value?.syscode || listRouteSyscode}-${resourceId.value || "root"}-data`,
+    () =>
+      `${config.value?.syscode || listRouteSyscode}-${resourceId.value || "root"}-data`,
     async () => {
       if (!config.value?.restUrl) return {};
 
@@ -50,7 +53,8 @@ export function useAdminResource<T extends { id?: number }>(
   );
 
   async function onDelete(confirmed: boolean) {
-    if (!confirmed || !config.value?.deleteUrl || !selected.value.length) return;
+    if (!confirmed || !config.value?.deleteUrl || !selected.value.length)
+      return;
 
     try {
       await Promise.all(

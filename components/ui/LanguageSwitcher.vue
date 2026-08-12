@@ -4,8 +4,13 @@ const switchLocalePath = useSwitchLocalePath();
 const switching = ref(false);
 const open = ref(false);
 
+function isLocaleCode(code: string): code is "cs" | "en" {
+  return code === "cs" || code === "en";
+}
+
 async function changeLanguage(code: string) {
-  if (code === lang.value.code || switching.value) return;
+  if (!isLocaleCode(code) || code === lang.value.code || switching.value)
+    return;
   const target = switchLocalePath(code);
   if (!target) return;
   open.value = false;
@@ -16,7 +21,6 @@ async function changeLanguage(code: string) {
     switching.value = false;
   }
 }
-
 </script>
 
 <template>

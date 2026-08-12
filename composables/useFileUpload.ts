@@ -30,7 +30,9 @@ async function uploadToTemp(
       try {
         const response = JSON.parse(xhr.responseText || "{}");
         const path = response?.data?.path;
-        path ? resolve(path) : reject(new Error("Upload nevrátil dočasnou cestu"));
+        path
+          ? resolve(path)
+          : reject(new Error("Upload nevrátil dočasnou cestu"));
       } catch {
         reject(new Error("Upload vrátil neplatnou odpověď"));
       }
@@ -83,5 +85,12 @@ export function useFileUpload() {
     uploadedFiles.value = [];
   }
 
-  return { uploadedFiles, uploading, tempPaths, addFiles, removeFile, clearFiles };
+  return {
+    uploadedFiles,
+    uploading,
+    tempPaths,
+    addFiles,
+    removeFile,
+    clearFiles,
+  };
 }

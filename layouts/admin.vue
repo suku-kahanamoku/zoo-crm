@@ -6,11 +6,31 @@ const open = ref(true);
 const colorMode = useColorMode();
 
 const navigation = computed(() => [
-  { label: t("$.admin.title"), to: localePath("/admin"), icon: "i-heroicons-squares-2x2" },
-  { label: t("$.admin.clients"), to: localePath("/admin/clients"), icon: "i-heroicons-users" },
-  { label: t("$.admin.products"), to: localePath("/admin/products"), icon: "i-heroicons-shopping-bag" },
-  { label: t("$.admin.categories"), to: localePath("/admin/categories"), icon: "i-lucide-paw-print" },
+  {
+    label: t("$.admin.title"),
+    to: localePath("/admin"),
+    icon: "i-heroicons-squares-2x2",
+  },
+  {
+    label: t("$.admin.clients"),
+    to: localePath("/admin/clients"),
+    icon: "i-heroicons-users",
+  },
+  {
+    label: t("$.admin.products"),
+    to: localePath("/admin/products"),
+    icon: "i-heroicons-shopping-bag",
+  },
+  {
+    label: t("$.admin.categories"),
+    to: localePath("/admin/categories"),
+    icon: "i-lucide-paw-print",
+  },
 ]);
+
+function toggleColorMode(): void {
+  colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
+}
 
 useSeoMeta({ robots: "noindex, nofollow" });
 </script>
@@ -29,17 +49,23 @@ useSeoMeta({ robots: "noindex, nofollow" });
         <UiLogo />
       </template>
       <template #right>
-        <div class="hidden items-center gap-2 rounded-full border border-default bg-elevated/70 px-3 py-1.5 text-xs font-bold text-muted lg:flex">
-          <span class="size-2 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgb(16_185_129_/_12%)]" />
+        <div
+          class="hidden items-center gap-2 rounded-full border border-default bg-elevated/70 px-3 py-1.5 text-xs font-bold text-muted lg:flex"
+        >
+          <span
+            class="size-2 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgb(16_185_129_/_12%)]"
+          />
           {{ t("$.layout.crm_online") }}
         </div>
         <UiLanguageSwitcher />
         <UButton
-          :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
+          :icon="
+            colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'
+          "
           color="neutral"
           variant="ghost"
           :aria-label="t('$.layout.toggle_color_mode')"
-          @click="colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'"
+          @click="toggleColorMode"
         />
         <UiProfileDropdownMenu v-if="loggedIn" />
       </template>
@@ -48,7 +74,9 @@ useSeoMeta({ robots: "noindex, nofollow" });
       </template>
     </UHeader>
 
-    <div class="flex min-h-[calc(100vh-var(--ui-header-height))] gap-4 p-3 sm:p-4">
+    <div
+      class="flex min-h-[calc(100vh-var(--ui-header-height))] gap-4 p-3 sm:p-4"
+    >
       <USidebar
         v-model:open="open"
         collapsible="icon"
@@ -68,15 +96,21 @@ useSeoMeta({ robots: "noindex, nofollow" });
         </template>
         <template #footer>
           <div class="m-2 rounded-xl bg-primary/8 p-3 text-xs text-muted">
-            <div class="mb-2 flex items-center gap-2 font-extrabold text-highlighted">
+            <div
+              class="mb-2 flex items-center gap-2 font-extrabold text-highlighted"
+            >
               <UIcon name="i-lucide-sparkles" class="size-4 text-primary" />
               {{ t("$.layout.smarter_offers") }}
             </div>
-            <p class="group-data-[collapsed=true]:hidden">{{ t("$.layout.smarter_offers_description") }}</p>
+            <p class="group-data-[collapsed=true]:hidden">
+              {{ t("$.layout.smarter_offers_description") }}
+            </p>
           </div>
         </template>
       </USidebar>
-      <main class="min-w-0 flex-1 overflow-auto rounded-2xl border border-white/50 bg-white/35 shadow-sm backdrop-blur-[2px] dark:border-white/5 dark:bg-slate-950/25">
+      <main
+        class="min-w-0 flex-1 overflow-auto rounded-2xl border border-white/50 bg-white/35 shadow-sm backdrop-blur-[2px] dark:border-white/5 dark:bg-slate-950/25"
+      >
         <div class="mx-auto w-full max-w-7xl px-5 pt-5 sm:px-7">
           <UiBreadcrumb />
         </div>

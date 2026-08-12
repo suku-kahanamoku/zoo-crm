@@ -50,7 +50,9 @@ function normalizeQuery(query: Record<string, any>): Record<string, any> {
 async function getSessionToken(event: H3Event): Promise<string | null> {
   try {
     const session = await getUserSession(event);
-    return (session as any)?.token || (session as any)?.tokens?.access_token || null;
+    return (
+      (session as any)?.token || (session as any)?.tokens?.access_token || null
+    );
   } catch {
     return null;
   }

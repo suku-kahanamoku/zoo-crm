@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import config from "@/assets/configs/client-list.json";
-definePageMeta({ layout: "admin", syscode: "admin_clients", title: "$.admin.clients" });
+definePageMeta({
+  layout: "admin",
+  syscode: "admin_clients",
+  title: "$.admin.clients",
+});
 const { t } = useLang();
 useHead({ title: computed(() => t("$.admin.clients")) });
 </script>

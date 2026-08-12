@@ -1,11 +1,17 @@
 <script setup lang="ts">
-definePageMeta({ syscode: "login", title: "$.login.title", label: "$.login.label" });
+import type { IFormField } from "@suku-kahanamoku/form-module/types";
+
+definePageMeta({
+  syscode: "login",
+  title: "$.login.title",
+  label: "$.login.label",
+});
 const { t } = useLang();
 const localePath = useLocalePath();
 const { display } = useToastify();
 const { fetch: refreshSession } = useUserSession();
 const loading = ref(false);
-const fields = [
+const fields: IFormField[] = [
   {
     name: "email",
     type: "email",
@@ -35,7 +41,10 @@ async function submit(body: Record<string, any>) {
   } catch (error: any) {
     display({
       type: "error",
-      message: error?.data?.message || error?.data?.statusMessage || t("$.login.failed"),
+      message:
+        error?.data?.message ||
+        error?.data?.statusMessage ||
+        t("$.login.failed"),
     });
   } finally {
     loading.value = false;
@@ -47,22 +56,47 @@ useSeoMeta({ robots: "noindex, nofollow" });
 </script>
 
 <template>
-  <div class="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-10 px-5 py-12 lg:grid-cols-[1.1fr_0.9fr]">
+  <div
+    class="mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-10 px-5 py-12 lg:grid-cols-[1.1fr_0.9fr]"
+  >
     <section class="hidden lg:block">
       <div class="crm-hero-panel p-10">
         <div class="relative z-10 max-w-xl">
-          <span class="mb-7 grid size-16 place-items-center rounded-2xl bg-white/15 shadow-xl backdrop-blur">
+          <span
+            class="mb-7 grid size-16 place-items-center rounded-2xl bg-white/15 shadow-xl backdrop-blur"
+          >
             <UIcon name="i-lucide-paw-print" class="size-9" />
           </span>
-          <p class="text-xs font-extrabold uppercase tracking-[0.22em] text-emerald-100">{{ t("$.login.hero_eyebrow") }}</p>
-          <h1 class="mt-4 text-5xl font-extrabold leading-tight tracking-tight">{{ t("$.login.hero_title") }}</h1>
+          <p
+            class="text-xs font-extrabold uppercase tracking-[0.22em] text-emerald-100"
+          >
+            {{ t("$.login.hero_eyebrow") }}
+          </p>
+          <h1 class="mt-4 text-5xl font-extrabold leading-tight tracking-tight">
+            {{ t("$.login.hero_title") }}
+          </h1>
           <p class="mt-5 text-lg leading-8 text-emerald-50/85">
             {{ t("$.login.hero_description") }}
           </p>
           <div class="mt-9 grid grid-cols-3 gap-3">
-            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur"><UIcon name="i-heroicons-users" class="mb-3 size-6" /><p class="text-sm font-bold">{{ t("$.login.feature_profiles") }}</p></div>
-            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur"><UIcon name="i-heroicons-shopping-bag" class="mb-3 size-6" /><p class="text-sm font-bold">{{ t("$.login.feature_catalogue") }}</p></div>
-            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur"><UIcon name="i-heroicons-sparkles" class="mb-3 size-6" /><p class="text-sm font-bold">{{ t("$.login.feature_recommendations") }}</p></div>
+            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur">
+              <UIcon name="i-heroicons-users" class="mb-3 size-6" />
+              <p class="text-sm font-bold">
+                {{ t("$.login.feature_profiles") }}
+              </p>
+            </div>
+            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur">
+              <UIcon name="i-heroicons-shopping-bag" class="mb-3 size-6" />
+              <p class="text-sm font-bold">
+                {{ t("$.login.feature_catalogue") }}
+              </p>
+            </div>
+            <div class="rounded-2xl bg-white/10 p-4 backdrop-blur">
+              <UIcon name="i-heroicons-sparkles" class="mb-3 size-6" />
+              <p class="text-sm font-bold">
+                {{ t("$.login.feature_recommendations") }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -77,11 +111,16 @@ useSeoMeta({ robots: "noindex, nofollow" });
         <CmpForm
           :fields="fields"
           :loading="loading"
-          :ui="{ root: 'w-full border-0 bg-transparent p-5 shadow-none', body: 'grid gap-5' }"
+          :ui="{
+            root: 'w-full border-0 bg-transparent p-5 shadow-none',
+            body: 'grid gap-5',
+          }"
           @submit="submit"
         />
       </div>
-      <p class="mt-5 text-center text-xs text-muted">{{ t("$.login.authorized_only") }}</p>
+      <p class="mt-5 text-center text-xs text-muted">
+        {{ t("$.login.authorized_only") }}
+      </p>
     </section>
   </div>
 </template>

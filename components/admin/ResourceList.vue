@@ -34,15 +34,28 @@ const cardViewEnabled = computed({
   },
 });
 const filterDraft = reactive<Record<string, any>>({});
-const rows = computed(() => ((response.value as any)?.data || []) as Record<string, any>[]);
-const fields = computed(() => (config.value?.fields || []) as Record<string, any>[]);
-const filterFields = computed(() => fields.value.filter((field) => field.filterable));
+const rows = computed(
+  () => ((response.value as any)?.data || []) as Record<string, any>[],
+);
+const fields = computed(
+  () => (config.value?.fields || []) as Record<string, any>[],
+);
+const filterFields = computed(() =>
+  fields.value.filter((field) => field.filterable),
+);
 const listBasePath = computed(() => props.createPath.replace(/\/create$/, ""));
 const allSelected = computed(
-  () => rows.value.length > 0 && rows.value.every((row) => selected.value.some((item) => item.id === row.id)),
+  () =>
+    rows.value.length > 0 &&
+    rows.value.every((row) =>
+      selected.value.some((item) => item.id === row.id),
+    ),
 );
 const activeFilterCount = computed(
-  () => Object.values(filterDraft).filter((value) => value !== "" && value !== null && value !== undefined).length,
+  () =>
+    Object.values(filterDraft).filter(
+      (value) => value !== "" && value !== null && value !== undefined,
+    ).length,
 );
 const filterAccordion = computed(() => [
   {
@@ -68,18 +81,28 @@ const { data: remoteOptions } = useAsyncData(
   },
   { watch: [config] },
 );
-const categoryRelation = computed(() => config.value?.relations?.categories as Record<string, any> | undefined);
+const categoryRelation = computed(
+  () => config.value?.relations?.categories as Record<string, any> | undefined,
+);
 const { data: categoryResponse } = useAsyncData(
   () => `${config.value?.syscode || props.listRouteSyscode}-category-options`,
-  () => categoryRelation.value?.restUrl ? useApi(categoryRelation.value.restUrl) : Promise.resolve({}),
+  () =>
+    categoryRelation.value?.restUrl
+      ? useApi(categoryRelation.value.restUrl)
+      : Promise.resolve({}),
   { watch: [categoryRelation] },
 );
-const categories = computed(() => ((categoryResponse.value as any)?.data || []) as Record<string, any>[]);
+const categories = computed(
+  () => ((categoryResponse.value as any)?.data || []) as Record<string, any>[],
+);
 const categoryMap = computed(() => {
   const valueKey = categoryRelation.value?.value || "id";
   const labelKey = categoryRelation.value?.label || "name";
   return Object.fromEntries(
-    categories.value.map((category) => [Number(category[valueKey]), category[labelKey]]),
+    categories.value.map((category) => [
+      Number(category[valueKey]),
+      category[labelKey],
+    ]),
   );
 });
 
@@ -101,28 +124,42 @@ function getValue(item: Record<string, any>, path: string): any {
   return path.split(".").reduce((value, key) => value?.[key], item);
 }
 
-function formatValue(item: Record<string, any>, field: Record<string, any>): string {
+function formatValue(
+  item: Record<string, any>,
+  field: Record<string, any>,
+): string {
   const value = getValue(item, field.colName || field.name);
   if (value === null || value === undefined || value === "") return "—";
   if (field.name === "status") return t(`$.status.${value}`);
   if (field.name === "kind") return t(`$.product.kinds.${value}`);
-  if (field.name === "published") return value ? t("$.form.yes") : t("$.form.no");
+  if (field.name === "published")
+    return value ? t("$.form.yes") : t("$.form.no");
   if (field.name === "price") {
-    return new Intl.NumberFormat("cs-CZ", { style: "currency", currency: "CZK" }).format(Number(value));
+    return new Intl.NumberFormat("cs-CZ", {
+      style: "currency",
+      currency: "CZK",
+    }).format(Number(value));
   }
   return String(value);
 }
 
 function filterOptions(field: Record<string, any>): Record<string, any>[] {
   if (field.restOptions) {
-    return (((remoteOptions.value as any)?.[field.name] || []) as Record<string, any>[]).map((item) => ({
+    return (
+      ((remoteOptions.value as any)?.[field.name] || []) as Record<
+        string,
+        any
+      >[]
+    ).map((item) => ({
       label: item[field.restOptions.label || "label"],
       value: item[field.restOptions.value || "value"],
     }));
   }
   return (field.options || []).map((option: Record<string, any>) => ({
     ...option,
-    label: String(option.label).startsWith("$.") ? t(option.label) : option.label,
+    label: String(option.label).startsWith("$.")
+      ? t(option.label)
+      : option.label,
   }));
 }
 
@@ -130,9 +167,15 @@ function isSelected(item: Record<string, any>): boolean {
   return selected.value.some((selectedItem) => selectedItem.id === item.id);
 }
 
-function toggleSelected(item: Record<string, any>, checked: boolean | "indeterminate") {
+function toggleSelected(
+  item: Record<string, any>,
+  checked: boolean | "indeterminate",
+) {
   selected.value = checked
-    ? [...selected.value.filter((selectedItem) => selectedItem.id !== item.id), item]
+    ? [
+        ...selected.value.filter((selectedItem) => selectedItem.id !== item.id),
+        item,
+      ]
     : selected.value.filter((selectedItem) => selectedItem.id !== item.id);
 }
 
@@ -148,7 +191,13 @@ function sortDirection(fieldName: string): "asc" | "desc" | null {
 
 function toggleSort(fieldName: string) {
   const direction = sortDirection(fieldName);
-  handleSort(direction === null ? [{ [fieldName]: 1 }] : direction === "asc" ? [{ [fieldName]: -1 }] : []);
+  handleSort(
+    direction === null
+      ? [{ [fieldName]: 1 }]
+      : direction === "asc"
+        ? [{ [fieldName]: -1 }]
+        : [],
+  );
 }
 
 function applyFilters() {
@@ -161,11 +210,21 @@ function resetFilters() {
 }
 
 function productCategories(item: Record<string, any>): string[] {
-  return (item.category_ids || []).map((id: number) => categoryMap.value[Number(id)]).filter(Boolean);
+  return (item.category_ids || [])
+    .map((id: number) => categoryMap.value[Number(id)])
+    .filter(Boolean);
 }
 
 async function confirmDelete(confirmed: boolean) {
   await onDelete(confirmed);
+}
+
+function openDeleteDialog(): void {
+  deleteDialogOpen.value = true;
+}
+
+function openDetail(item: Record<string, any>): void {
+  void navigateTo(detailUrl(item));
 }
 </script>
 
@@ -175,25 +234,47 @@ async function confirmDelete(confirmed: boolean) {
       <div>
         <p class="crm-eyebrow">{{ t("$.base.workspace") }}</p>
         <h1 class="crm-page-title">{{ title }}</h1>
-        <p class="mt-2 max-w-2xl text-sm text-muted">{{ t(`$.view.${resource}_description`) }}</p>
+        <p class="mt-2 max-w-2xl text-sm text-muted">
+          {{ t(`$.view.${resource}_description`) }}
+        </p>
       </div>
       <div class="crm-view-switcher">
-        <span :class="viewMode === 'table' ? 'text-highlighted' : 'text-muted'" class="inline-flex items-center gap-1.5 text-sm font-bold">
+        <span
+          :class="viewMode === 'table' ? 'text-highlighted' : 'text-muted'"
+          class="inline-flex items-center gap-1.5 text-sm font-bold"
+        >
           <UIcon name="i-heroicons-table-cells" class="size-4" />
           {{ t("$.view.table") }}
         </span>
-        <USwitch v-model="cardViewEnabled" color="primary" :aria-label="t('$.view.switch_aria')" />
-        <span :class="viewMode === 'cards' ? 'text-highlighted' : 'text-muted'" class="inline-flex items-center gap-1.5 text-sm font-bold">
+        <USwitch
+          v-model="cardViewEnabled"
+          color="primary"
+          :aria-label="t('$.view.switch_aria')"
+        />
+        <span
+          :class="viewMode === 'cards' ? 'text-highlighted' : 'text-muted'"
+          class="inline-flex items-center gap-1.5 text-sm font-bold"
+        >
           <UIcon name="i-heroicons-squares-2x2" class="size-4" />
           {{ t("$.view.cards") }}
         </span>
       </div>
     </div>
 
-    <UAccordion :items="filterAccordion" class="mb-4 rounded-xl border border-default bg-default px-4">
+    <UAccordion
+      :items="filterAccordion"
+      class="mb-4 rounded-xl border border-default bg-default px-4"
+    >
       <template #body>
-        <form class="grid gap-4 pb-4 md:grid-cols-2 xl:grid-cols-4" @submit.prevent="applyFilters">
-          <UFormField v-for="field in filterFields" :key="field.name" :label="t(field.label)">
+        <form
+          class="grid gap-4 pb-4 md:grid-cols-2 xl:grid-cols-4"
+          @submit.prevent="applyFilters"
+        >
+          <UFormField
+            v-for="field in filterFields"
+            :key="field.name"
+            :label="t(field.label)"
+          >
             <USelect
               v-if="field.type === 'select'"
               v-model="filterDraft[field.name]"
@@ -211,8 +292,15 @@ async function confirmDelete(confirmed: boolean) {
             />
           </UFormField>
           <div class="flex items-end gap-2">
-            <UButton type="submit" icon="i-heroicons-magnifying-glass">{{ t("$.filter.apply") }}</UButton>
-            <UButton type="button" color="neutral" variant="outline" @click="resetFilters">
+            <UButton type="submit" icon="i-heroicons-magnifying-glass">{{
+              t("$.filter.apply")
+            }}</UButton>
+            <UButton
+              type="button"
+              color="neutral"
+              variant="outline"
+              @click="resetFilters"
+            >
               {{ t("$.filter.reset") }}
             </UButton>
           </div>
@@ -232,7 +320,7 @@ async function confirmDelete(confirmed: boolean) {
           :aria-label="t('$.aria.delete_selected')"
           :disabled="!selected.length"
           :loading="loading"
-          @click="deleteDialogOpen = true"
+          @click="openDeleteDialog"
         />
         <UButton
           :to="localePath(createPath)"
@@ -247,22 +335,40 @@ async function confirmDelete(confirmed: boolean) {
     <div v-if="viewMode === 'table'" class="crm-data-panel overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-sm">
-          <thead class="border-b border-default bg-elevated/60 text-xs uppercase tracking-wide text-muted">
+          <thead
+            class="border-b border-default bg-elevated/60 text-xs uppercase tracking-wide text-muted"
+          >
             <tr>
               <th class="w-12 px-4 py-3">
-                <UCheckbox :model-value="allSelected" @update:model-value="toggleAll" />
+                <UCheckbox
+                  :model-value="allSelected"
+                  @update:model-value="toggleAll"
+                />
               </th>
-              <th v-for="field in fields" :key="field.name" class="whitespace-nowrap px-4 py-3">
-                <button class="inline-flex items-center gap-1 font-bold" @click="toggleSort(field.name)">
+              <th
+                v-for="field in fields"
+                :key="field.name"
+                class="whitespace-nowrap px-4 py-3"
+              >
+                <button
+                  class="inline-flex items-center gap-1 font-bold"
+                  @click="toggleSort(field.name)"
+                >
                   {{ t(field.label) }}
                   <UIcon
                     v-if="sortDirection(field.name)"
-                    :name="sortDirection(field.name) === 'asc' ? 'i-lucide-arrow-up' : 'i-lucide-arrow-down'"
+                    :name="
+                      sortDirection(field.name) === 'asc'
+                        ? 'i-lucide-arrow-up'
+                        : 'i-lucide-arrow-down'
+                    "
                     class="size-3.5"
                   />
                 </button>
               </th>
-              <th class="w-12 px-4 py-3"><span class="sr-only">{{ t("$.view.actions") }}</span></th>
+              <th class="w-12 px-4 py-3">
+                <span class="sr-only">{{ t("$.view.actions") }}</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -270,19 +376,39 @@ async function confirmDelete(confirmed: boolean) {
               v-for="item in rows"
               :key="item.id"
               class="group cursor-pointer border-b border-default transition-colors last:border-b-0 hover:bg-primary/5"
-              @click="navigateTo(detailUrl(item))"
+              @click="openDetail(item)"
             >
               <td class="px-4 py-3" @click.stop>
-                <UCheckbox :model-value="isSelected(item)" @update:model-value="toggleSelected(item, $event)" />
+                <UCheckbox
+                  :model-value="isSelected(item)"
+                  @update:model-value="toggleSelected(item, $event)"
+                />
               </td>
-              <td v-for="(field, index) in fields" :key="field.name" class="max-w-72 px-4 py-3">
-                <NuxtLink v-if="index === 0" :to="detailUrl(item)" class="font-bold text-primary hover:underline" @click.stop>
+              <td
+                v-for="(field, index) in fields"
+                :key="field.name"
+                class="max-w-72 px-4 py-3"
+              >
+                <NuxtLink
+                  v-if="index === 0"
+                  :to="detailUrl(item)"
+                  class="font-bold text-primary hover:underline"
+                  @click.stop
+                >
                   {{ formatValue(item, field) }}
                 </NuxtLink>
-                <UBadge v-else-if="field.name === 'status' || field.name === 'published'" color="neutral" variant="subtle">
+                <UBadge
+                  v-else-if="
+                    field.name === 'status' || field.name === 'published'
+                  "
+                  color="neutral"
+                  variant="subtle"
+                >
                   {{ formatValue(item, field) }}
                 </UBadge>
-                <span v-else class="line-clamp-2">{{ formatValue(item, field) }}</span>
+                <span v-else class="line-clamp-2">{{
+                  formatValue(item, field)
+                }}</span>
               </td>
               <td class="px-4 py-3" @click.stop>
                 <UButton
@@ -290,15 +416,22 @@ async function confirmDelete(confirmed: boolean) {
                   color="error"
                   variant="ghost"
                   :aria-label="t('$.btn.delete')"
-                  @click="selected = [item]; deleteDialogOpen = true"
+                  @click="
+                    selected = [item];
+                    deleteDialogOpen = true;
+                  "
                 />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div v-if="loading" class="p-8 text-center text-muted">{{ t("$.view.loading") }}</div>
-      <div v-else-if="!rows.length" class="p-8 text-center text-muted">{{ t("$.view.empty") }}</div>
+      <div v-if="loading" class="p-8 text-center text-muted">
+        {{ t("$.view.loading") }}
+      </div>
+      <div v-else-if="!rows.length" class="p-8 text-center text-muted">
+        {{ t("$.view.empty") }}
+      </div>
     </div>
 
     <div v-else class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -306,63 +439,115 @@ async function confirmDelete(confirmed: boolean) {
         v-for="item in rows"
         :key="item.id"
         class="crm-record-card cursor-pointer transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-        @click="navigateTo(detailUrl(item))"
+        @click="openDetail(item)"
       >
         <div class="flex items-start justify-between gap-3">
           <div class="min-w-0">
             <p class="truncate text-lg font-bold text-highlighted">
-              {{ resource === 'client' ? `${item.first_name} ${item.last_name}` : item.name }}
+              {{
+                resource === "client"
+                  ? `${item.first_name} ${item.last_name}`
+                  : item.name
+              }}
             </p>
-            <p class="truncate text-sm text-muted">{{ resource === 'client' ? item.email : item.syscode || item.sku }}</p>
+            <p class="truncate text-sm text-muted">
+              {{
+                resource === "client" ? item.email : item.syscode || item.sku
+              }}
+            </p>
           </div>
           <div class="flex items-center gap-1" @click.stop>
-            <UCheckbox :model-value="isSelected(item)" @update:model-value="toggleSelected(item, $event)" />
+            <UCheckbox
+              :model-value="isSelected(item)"
+              @update:model-value="toggleSelected(item, $event)"
+            />
             <UButton
               icon="i-heroicons-trash"
               color="error"
               variant="ghost"
               size="sm"
-              @click="selected = [item]; deleteDialogOpen = true"
+              @click="
+                selected = [item];
+                deleteDialogOpen = true;
+              "
             />
           </div>
         </div>
 
         <div v-if="resource === 'client'" class="mt-4 space-y-3 text-sm">
           <div class="flex flex-wrap gap-2">
-            <UBadge color="primary" variant="subtle">{{ item.client_type?.label || t("$.client.type_unassigned") }}</UBadge>
-            <UBadge color="neutral" variant="subtle">{{ t(`$.status.${item.status || 'active'}`) }}</UBadge>
+            <UBadge color="primary" variant="subtle">{{
+              item.client_type?.label || t("$.client.type_unassigned")
+            }}</UBadge>
+            <UBadge color="neutral" variant="subtle">{{
+              t(`$.status.${item.status || "active"}`)
+            }}</UBadge>
           </div>
-          <p class="line-clamp-3 text-muted">{{ item.profile?.summary || t("$.client.profile_missing") }}</p>
+          <p class="line-clamp-3 text-muted">
+            {{ item.profile?.summary || t("$.client.profile_missing") }}
+          </p>
           <p v-if="item.profile?.average_basket" class="font-semibold">
             {{ t("$.client.average_basket") }}:
-            {{ new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK' }).format(item.profile.average_basket) }}
+            {{
+              new Intl.NumberFormat("cs-CZ", {
+                style: "currency",
+                currency: "CZK",
+              }).format(item.profile.average_basket)
+            }}
           </p>
         </div>
 
         <div v-else-if="resource === 'product'" class="mt-4 space-y-3 text-sm">
           <div class="flex items-center justify-between gap-3">
-            <UBadge color="secondary" variant="subtle">{{ t(`$.product.kinds.${item.kind || 'other'}`) }}</UBadge>
+            <UBadge color="secondary" variant="subtle">{{
+              t(`$.product.kinds.${item.kind || "other"}`)
+            }}</UBadge>
             <span class="text-lg font-extrabold text-primary">
-              {{ new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK' }).format(Number(item.price || 0)) }}
+              {{
+                new Intl.NumberFormat("cs-CZ", {
+                  style: "currency",
+                  currency: "CZK",
+                }).format(Number(item.price || 0))
+              }}
             </span>
           </div>
-          <p class="line-clamp-2 text-muted">{{ item.description || t("$.product.description_missing") }}</p>
+          <p class="line-clamp-2 text-muted">
+            {{ item.description || t("$.product.description_missing") }}
+          </p>
           <div class="flex flex-wrap gap-1.5">
-            <UBadge v-for="category in productCategories(item)" :key="category" color="neutral" variant="outline">
+            <UBadge
+              v-for="category in productCategories(item)"
+              :key="category"
+              color="neutral"
+              variant="outline"
+            >
               {{ category }}
             </UBadge>
           </div>
-          <p>{{ t("$.product.stock") }}: <strong>{{ item.stock_quantity || 0 }} ks</strong></p>
+          <p>
+            {{ t("$.product.stock") }}:
+            <strong>{{ item.stock_quantity || 0 }} ks</strong>
+          </p>
         </div>
 
         <div v-else class="mt-4 space-y-3 text-sm">
-          <p class="line-clamp-3 text-muted">{{ item.description || t("$.category.description_missing") }}</p>
-          <p>{{ t("$.category.position") }}: <strong>{{ item.position ?? '—' }}</strong></p>
+          <p class="line-clamp-3 text-muted">
+            {{ item.description || t("$.category.description_missing") }}
+          </p>
+          <p>
+            {{ t("$.category.position") }}:
+            <strong>{{ item.position ?? "—" }}</strong>
+          </p>
         </div>
 
         <template #footer>
           <div class="flex justify-end">
-            <UButton :to="detailUrl(item)" variant="soft" trailing-icon="i-heroicons-arrow-right" @click.stop>
+            <UButton
+              :to="detailUrl(item)"
+              variant="soft"
+              trailing-icon="i-heroicons-arrow-right"
+              @click.stop
+            >
               {{ t("$.btn.show_detail") }}
             </UButton>
           </div>
@@ -397,7 +582,9 @@ async function confirmDelete(confirmed: boolean) {
       {{
         selected.length > 1
           ? t("$.message.delete_question_multi", { length: selected.length })
-          : t("$.message.delete_question", { name: selected[0]?.[nameField] || "" })
+          : t("$.message.delete_question", {
+              name: selected[0]?.[nameField] || "",
+            })
       }}
     </CmpConfirmDialog>
   </div>

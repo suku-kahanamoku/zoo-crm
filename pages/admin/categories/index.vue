@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import config from "@/assets/configs/category-list.json";
-definePageMeta({ layout: "admin", syscode: "admin_categories", title: "$.admin.categories" });
+definePageMeta({
+  layout: "admin",
+  syscode: "admin_categories",
+  title: "$.admin.categories",
+});
 const { t } = useLang();
 useHead({ title: computed(() => t("$.admin.categories")) });
 </script>
@@ -8,7 +12,12 @@ useHead({ title: computed(() => t("$.admin.categories")) });
 <template>
   <div>
     <div class="mx-auto max-w-7xl px-5 pt-4">
-      <UAlert color="primary" variant="subtle" icon="i-lucide-paw-print" :description="t('$.category.examples')" />
+      <UAlert
+        color="primary"
+        variant="subtle"
+        icon="i-lucide-paw-print"
+        :description="t('$.category.examples')"
+      />
     </div>
     <AdminResourceList
       :title="t('$.admin.categories')"

@@ -47,7 +47,11 @@ function formatSize(size: number) {
     <button
       type="button"
       class="flex min-h-44 w-full flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-8 text-center transition"
-      :class="dragging ? 'border-primary-500 bg-primary-50' : 'border-slate-300 bg-slate-50 hover:border-primary-400 dark:border-slate-700 dark:bg-slate-900'"
+      :class="
+        dragging
+          ? 'border-primary-500 bg-primary-50'
+          : 'border-slate-300 bg-slate-50 hover:border-primary-400 dark:border-slate-700 dark:bg-slate-900'
+      "
       @click="input?.click()"
       @dragover.prevent="dragging = true"
       @dragleave.prevent="dragging = false"
@@ -55,7 +59,9 @@ function formatSize(size: number) {
     >
       <UIcon name="i-heroicons-photo" class="mb-3 size-10 text-primary-600" />
       <span class="font-semibold">{{ t("$.upload.drop_images") }}</span>
-      <span class="mt-1 text-sm text-slate-500">{{ t("$.upload.image_limits") }}</span>
+      <span class="mt-1 text-sm text-slate-500">{{
+        t("$.upload.image_limits")
+      }}</span>
     </button>
 
     <div v-if="files.length" class="space-y-2">
@@ -68,15 +74,25 @@ function formatSize(size: number) {
         <div class="min-w-0 flex-1">
           <div class="flex justify-between gap-3 text-sm">
             <span class="truncate font-medium">{{ file.file.name }}</span>
-            <span class="shrink-0 text-slate-500">{{ formatSize(file.file.size) }}</span>
+            <span class="shrink-0 text-slate-500">{{
+              formatSize(file.file.size)
+            }}</span>
           </div>
           <UProgress
             class="mt-2"
             :model-value="file.progress"
             :max="100"
-            :color="file.status === 'error' ? 'error' : file.status === 'uploaded' ? 'success' : 'primary'"
+            :color="
+              file.status === 'error'
+                ? 'error'
+                : file.status === 'uploaded'
+                  ? 'success'
+                  : 'primary'
+            "
           />
-          <p v-if="file.error" class="mt-1 text-xs text-error-600">{{ file.error }}</p>
+          <p v-if="file.error" class="mt-1 text-xs text-error-600">
+            {{ file.error }}
+          </p>
         </div>
         <UButton
           icon="i-heroicons-trash"

@@ -6,7 +6,10 @@ const localePath = useLocalePath();
 const items = computed(() => [
   {
     avatar: {
-      alt: [user.value?.first_name, user.value?.last_name].filter(Boolean).join(" ") || "Admin",
+      alt:
+        [user.value?.first_name, user.value?.last_name]
+          .filter(Boolean)
+          .join(" ") || "Admin",
       icon: "i-heroicons-user",
     },
     children: [

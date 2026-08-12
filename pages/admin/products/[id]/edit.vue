@@ -3,17 +3,32 @@ import configSource from "@/assets/configs/product-update.json";
 import { useFileUpload } from "@/composables/useFileUpload";
 import type { IProduct } from "@/types/crm";
 
-definePageMeta({ layout: "admin", syscode: "admin_products_edit", title: "$.admin.edit_product" });
+definePageMeta({
+  layout: "admin",
+  syscode: "admin_products_edit",
+  title: "$.admin.edit_product",
+});
 const { t } = useLang();
 const route = useRoute();
 const { success, error: toastError } = useToastify();
-const { config, response, loading, onSave, refresh } = useAdminResource<IProduct>(configSource, "admin_products");
-const product = computed(() => (response.value as any)?.data as IProduct | undefined);
-const { uploadedFiles, uploading, tempPaths, addFiles, removeFile, clearFiles } = useFileUpload();
+const { config, response, loading, onSave, refresh } =
+  useAdminResource<IProduct>(configSource, "admin_products");
+const product = computed(
+  () => (response.value as any)?.data as IProduct | undefined,
+);
+const {
+  uploadedFiles,
+  uploading,
+  tempPaths,
+  addFiles,
+  removeFile,
+  clearFiles,
+} = useFileUpload();
 const savingFiles = ref(false);
 
 async function submit(body: Record<string, any>) {
-  if (product.value && (await onSave(body, product.value))?.data) await navigateTo(route.path.replace(/\/edit$/, ""));
+  if (product.value && (await onSave(body, product.value))?.data)
+    await navigateTo(route.path.replace(/\/edit$/, ""));
 }
 
 async function saveFiles() {
@@ -37,7 +52,10 @@ async function saveFiles() {
       if (id) newIds.push(id);
     }
     if (newIds.length) {
-      const patchUrl = useUrl(config.value.filePatchUrl, { route, item: product.value });
+      const patchUrl = useUrl(config.value.filePatchUrl, {
+        route,
+        item: product.value,
+      });
       await useApi(patchUrl, {
         method: "PATCH",
         body: { file_ids: [...(product.value.file_ids || []), ...newIds] },
@@ -58,14 +76,27 @@ useHead({ title: computed(() => t("$.admin.edit_product")) });
 
 <template>
   <div v-if="config" class="mx-auto w-full max-w-5xl px-5 pb-10">
-    <div class="crm-page-heading"><div><p class="crm-eyebrow">{{ t("$.section.catalogue_management") }}</p><h1 class="crm-page-title">{{ t('$.admin.edit_product') }}</h1></div></div>
+    <div class="crm-page-heading">
+      <div>
+        <p class="crm-eyebrow">{{ t("$.section.catalogue_management") }}</p>
+        <h1 class="crm-page-title">{{ t("$.admin.edit_product") }}</h1>
+      </div>
+    </div>
     <USkeleton v-if="loading && !product" class="h-96 w-full rounded-2xl" />
     <UTabs
       v-else-if="product"
       class="crm-form-shell p-4 sm:p-5"
       :items="[
-        { label: t('$.product.description'), slot: 'detail', icon: 'i-heroicons-pencil-square' },
-        { label: t('$.product.images'), slot: 'images', icon: 'i-heroicons-photo' }
+        {
+          label: t('$.product.description'),
+          slot: 'detail',
+          icon: 'i-heroicons-pencil-square',
+        },
+        {
+          label: t('$.product.images'),
+          slot: 'images',
+          icon: 'i-heroicons-photo',
+        },
       ]"
     >
       <template #detail>
@@ -74,25 +105,51 @@ useHead({ title: computed(() => t("$.admin.edit_product")) });
             :fields="config.fields"
             :item="product"
             :loading="loading"
-            :actions="{ no: { link: { path: route.path.replace(/\/edit$/, '') } } }"
-            :ui="{ root: 'border-0 bg-transparent shadow-none', body: 'grid gap-5 md:grid-cols-2' }"
+            :actions="{
+              no: { link: route.path.replace(/\/edit$/, '') },
+            }"
+            :ui="{
+              root: 'border-0 bg-transparent shadow-none',
+              body: 'grid gap-5 md:grid-cols-2',
+            }"
             @submit="submit"
           />
         </div>
       </template>
       <template #images>
         <div class="space-y-6 pt-5">
-          <UiProductFileUpload :files="uploadedFiles" :uploading="uploading" @add="addFiles" @remove="removeFile" />
+          <UiProductFileUpload
+            :files="uploadedFiles"
+            :uploading="uploading"
+            @add="addFiles"
+            @remove="removeFile"
+          />
           <div class="flex justify-end">
-            <UButton icon="i-heroicons-cloud-arrow-up" :disabled="!tempPaths.length || uploading" :loading="savingFiles" @click="saveFiles">
+            <UButton
+              icon="i-heroicons-cloud-arrow-up"
+              :disabled="!tempPaths.length || uploading"
+              :loading="savingFiles"
+              @click="saveFiles"
+            >
               {{ t("$.product.save_images") }}
             </UButton>
           </div>
           <div v-if="product.files?.length">
             <h3 class="mb-3 font-bold">{{ t("$.product.existing_images") }}</h3>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-              <a v-for="file in product.files" :key="file.id" :href="`/api/${file.path}`" target="_blank" rel="noopener noreferrer" class="overflow-hidden rounded-xl border border-default bg-default">
-                <img :src="`/api/${file.path}`" :alt="file.name" class="h-36 w-full object-cover" />
+              <a
+                v-for="file in product.files"
+                :key="file.id"
+                :href="`/api/${file.path}`"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="overflow-hidden rounded-xl border border-default bg-default"
+              >
+                <img
+                  :src="`/api/${file.path}`"
+                  :alt="file.name"
+                  class="h-36 w-full object-cover"
+                />
                 <p class="truncate p-2 text-xs text-muted">{{ file.name }}</p>
               </a>
             </div>
@@ -100,6 +157,12 @@ useHead({ title: computed(() => t("$.admin.edit_product")) });
         </div>
       </template>
     </UTabs>
-    <UAlert v-else color="error" variant="subtle" icon="i-heroicons-exclamation-triangle" :title="t('$.view.load_error')" />
+    <UAlert
+      v-else
+      color="error"
+      variant="subtle"
+      icon="i-heroicons-exclamation-triangle"
+      :title="t('$.view.load_error')"
+    />
   </div>
 </template>
