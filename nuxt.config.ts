@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   site: {
     url: process.env.FRONTEND_HOST,
     name: "Zoo CRM",
+    trailingSlash: false,
   },
 
   devtools: { enabled: true },
@@ -56,6 +57,19 @@ export default defineNuxtConfig({
       process.env.PHP_FILE_ROOT || "/home/suku/Workspace/php/php-core",
     public: {
       frontendHost: process.env.FRONTEND_HOST || "http://zoo.localhost:3000",
+    },
+  },
+
+  nitro: {
+    prerender: {
+      autoSubfolderIndex: false,
+    },
+  },
+
+  pwa: {
+    registerType: "autoUpdate",
+    workbox: {
+      navigateFallback: undefined,
     },
   },
 
