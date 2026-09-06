@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     trailingSlash: false,
   },
 
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV !== "production" },
 
   hooks: {
     "components:extend": (components) => {
@@ -42,6 +42,10 @@ export default defineNuxtConfig({
 
   authModule: {
     protectedPages: ["/admin"],
+  },
+
+  seoModule: {
+    fontaineEnabled: false,
   },
 
   css: ["@/assets/css/main.css"],
