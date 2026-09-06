@@ -64,6 +64,7 @@ export async function phpApiFetch<T = any>(
   options: { method?: string; body?: any; query?: Record<string, any> } = {},
 ): Promise<PhpApiResponse<T>> {
   const config = useRuntimeConfig();
+  const method = (options.method || "GET").toUpperCase();
   const token = await getSessionToken(event);
   const frontendHost = String(config.public.frontendHost || "");
   const hostHeader = frontendHost
@@ -74,9 +75,19 @@ export async function phpApiFetch<T = any>(
     ...(hostHeader ? { "X-Forwarded-Host": hostHeader } : {}),
   };
   if (token) headers.Authorization = `Bearer ${token}`;
+  if (method === "GET") {
+    const internalKey = String(config.internalApiKey || "");
+    if (!internalKey) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: "INTERNAL_API_KEY is not configured",
+      });
+    }
+    headers["X-Internal-Key"] = internalKey;
+  }
 
   return await $fetch<PhpApiResponse<T>>(String(config.phpApiBaseUrl) + path, {
-    method: (options.method as any) || "GET",
+    method: method as any,
     headers,
     ...(options.body !== undefined ? { body: options.body } : {}),
     ...(options.query ? { query: normalizeQuery(options.query) } : {}),

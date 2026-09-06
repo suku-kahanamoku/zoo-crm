@@ -55,6 +55,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    internalApiKey: process.env.INTERNAL_API_KEY,
     phpApiBaseUrl:
       process.env.PHP_API_BASE_URL || "http://127.0.0.1/php/php-core/api",
     phpFileRoot:

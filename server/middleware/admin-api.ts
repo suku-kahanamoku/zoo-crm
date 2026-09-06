@@ -1,5 +1,7 @@
 export default defineEventHandler(async (event) => {
-  if (event.path !== "/api/admin" && !event.path.startsWith("/api/admin/")) return;
+  if (event.path !== "/api/admin" && !event.path.startsWith("/api/admin/"))
+    return;
+  if (event.method === "GET") return;
 
   const session = await getUserSession(event).catch(() => null);
   const user = (session as any)?.user;
