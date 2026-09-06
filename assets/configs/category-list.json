@@ -3,7 +3,7 @@
   "restUrl": "/api/admin/category",
   "deleteUrl": "/api/admin/category/${item.id}",
   "pagination": { "limit": 20 },
-  "factory": { "url": "${name}--$${id}" },
+  "factory": { "url": "${name}--${id}" },
   "fields": [
     {
       "name": "name",

@@ -3,7 +3,7 @@
   "restUrl": "/api/admin/client",
   "deleteUrl": "/api/admin/client/${item.id}",
   "pagination": { "limit": 20 },
-  "factory": { "url": "${first_name}-${last_name}--$${id}" },
+  "factory": { "url": "${first_name}-${last_name}--${id}" },
   "fields": [
     {
       "name": "email",

@@ -1,6 +1,6 @@
 /**
  * Extracts a numeric resource ID from plain IDs and generated slugs such as
- * `Ivana-Horakova--$34` or `product-name--34`.
+ * `Ivana-Horakova--34` or legacy links such as `product-name--$34`.
  */
 export function parseResourceId(value: string | string[] | undefined): number {
   const raw = Array.isArray(value) ? value[0] : value;
