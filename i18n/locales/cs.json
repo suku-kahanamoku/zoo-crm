@@ -6,15 +6,22 @@
       "workspace": "Zákaznické centrum",
       "smart_profiles": "Chytré profily"
     },
-    "language": { "change": "Změnit jazyk" },
+    "language": {
+      "change": "Změnit jazyk"
+    },
     "layout": {
       "crm_online": "CRM online",
       "toggle_color_mode": "Přepnout barevný režim",
       "smarter_offers": "Chytřejší nabídky",
       "smarter_offers_description": "Propojujte zákaznické profily s vhodným sortimentem."
     },
-    "breadcrumb": { "create": "Nový záznam", "edit": "Úprava" },
-    "navbar": { "logout": "Odhlásit" },
+    "breadcrumb": {
+      "create": "Nový záznam",
+      "edit": "Úprava"
+    },
+    "navbar": {
+      "logout": "Odhlásit"
+    },
     "login": {
       "title": "Přihlášení do Zoo CRM",
       "label": "Přihlášení",
@@ -44,7 +51,9 @@
       "edit_product": "Editace produktu",
       "new_category": "Nový druh zvířete",
       "category_detail": "Detail kategorie",
-      "edit_category": "Editace druhu zvířete"
+      "edit_category": "Editace druhu zvířete",
+      "profiles": "Profily zákazníků",
+      "profile_detail": "Detail profilu"
     },
     "dashboard": {
       "administrator": "administrátore",
@@ -147,8 +156,17 @@
         "other": "Ostatní"
       }
     },
-    "status": { "active": "Aktivní", "inactive": "Neaktivní", "banned": "Blokovaný" },
-    "filter": { "title": "Filtrovat přehled", "all": "Všechny možnosti", "apply": "Použít filtr", "reset": "Vymazat" },
+    "status": {
+      "active": "Aktivní",
+      "inactive": "Neaktivní",
+      "banned": "Blokovaný"
+    },
+    "filter": {
+      "title": "Filtrovat přehled",
+      "all": "Všechny možnosti",
+      "apply": "Použít filtr",
+      "reset": "Vymazat"
+    },
     "view": {
       "table": "Tabulka",
       "cards": "Karty",
@@ -167,11 +185,45 @@
       "no": "Ne",
       "delete_success_msg": "Záznam byl úspěšně smazán"
     },
-    "btn": { "delete": "Smazat", "submit": "Uložit", "cancel": "Zrušit", "edit": "Upravit", "show_detail": "Zobrazit detail", "back_to_list": "Zpět na přehled" },
+    "btn": {
+      "delete": "Smazat",
+      "submit": "Uložit",
+      "cancel": "Zrušit",
+      "edit": "Upravit",
+      "show_detail": "Zobrazit detail",
+      "back_to_list": "Zpět na přehled"
+    },
     "message": {
       "delete_question": "Opravdu chcete smazat záznam „{name}“?",
       "delete_question_multi": "Opravdu chcete smazat {length} záznamů?"
     },
-    "aria": { "delete_selected": "Smazat vybrané záznamy", "create_new": "Vytvořit nový záznam" }
+    "aria": {
+      "delete_selected": "Smazat vybrané záznamy",
+      "create_new": "Vytvořit nový záznam"
+    },
+    "profile": {
+      "reference_data": "Referenční data pro rozhovor",
+      "list_description": "Referenční profily pomáhají rozpoznat motivaci zákazníka, položit správné otázky a připravit se na typické námitky.",
+      "number": "Číslo profilu",
+      "name": "Název profilu",
+      "selection_need": "Jak vybírá / potřeba",
+      "sales_questions": "3 otázky prodavačky",
+      "typical_objections": "Typické námitky",
+      "first_question": "První doporučená otázka",
+      "product_probabilities": "Produkty a nákupní pravděpodobnost",
+      "product_probabilities_help": "Produkty jsou seřazené od nejvyšší simulované pravděpodobnosti nákupu.",
+      "names": {
+        "specific_fragrance": "1 · Jdu pro konkrétní parfém (%)",
+        "gift_buyer": "2 · Kupující dárek (%)",
+        "best_price_hunter": "3 · Lovec nejlepší ceny (%)",
+        "new_fragrance_seeker": "4 · Hledám novou vůni (%)",
+        "premium_customer": "5 · Prémiový zákazník (%)",
+        "social_media_customer": "6 · Zákazník ze sociálních sítí (%)",
+        "indecisive_customer": "7 · Nerozhodný zákazník (%)",
+        "cosmetics_customer": "8 · Kosmetický zákazník (%)",
+        "informed_connoisseur": "9 · Informovaný znalec (%)",
+        "just_browsing": "10 · Jen se dívám (%)"
+      }
+    }
   }
 }

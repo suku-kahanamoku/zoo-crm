@@ -26,10 +26,11 @@ const { data: productsResponse } = useAsyncData(
 const client = computed(
   () => (response.value as any)?.data as IClient | undefined,
 );
+const primaryProfile = computed(() => [...(client.value?.profiles || [])].sort((a,b) => a.priority-b.priority)[0]);
 const recommendedProducts = computed(() => {
-  const skus = client.value?.profile?.recommended_product_skus || [];
-  return (((productsResponse.value as any)?.data || []) as IProduct[]).filter(
-    (product) => skus.includes(product.sku || ""),
+  const ids = new Set((client.value?.profiles || []).map((profile) => Number(profile.id)));
+  return (((productsResponse.value as any)?.data || []) as IProduct[]).filter((product) =>
+    (product.profile_probabilities || []).some((row) => ids.has(Number(row.customer_profile_id)) && row.is_target === 1),
   );
 });
 const fullName = computed(() =>
@@ -96,7 +97,7 @@ useHead({ title: fullName });
             </p>
             <div class="mt-4 flex flex-wrap gap-2">
               <UBadge color="primary" variant="subtle">{{
-                client.client_type?.label || t("$.client.type_unassigned")
+                primaryProfile?.name || t("$.client.type_unassigned")
               }}</UBadge>
               <UBadge color="neutral" variant="subtle">{{
                 t(`$.status.${client.status || "active"}`)
@@ -108,13 +109,13 @@ useHead({ title: fullName });
               {{ t("$.client.profile_summary") }}
             </p>
             <p class="mt-2 text-lg leading-8">
-              {{ client.profile?.summary || t("$.client.profile_missing") }}
+              {{ primaryProfile?.summary || t("$.client.profile_missing") }}
             </p>
             <div
-              v-if="client.profile?.aura"
+              v-if="primaryProfile?.aura"
               class="mt-5 rounded-xl border-l-4 border-primary bg-primary/5 p-4 italic"
             >
-              „{{ client.profile.aura }}“
+              „{{ primaryProfile.aura }}“
             </div>
           </div>
         </div>
@@ -128,23 +129,23 @@ useHead({ title: fullName });
             </h2></template
           >
           <dl class="space-y-5">
-            <div v-if="client.profile?.visual">
+            <div v-if="primaryProfile?.visual">
               <dt class="text-xs font-bold uppercase tracking-wide text-muted">
                 {{ t("$.client.visual") }}
               </dt>
-              <dd class="mt-1">{{ client.profile.visual }}</dd>
+              <dd class="mt-1">{{ primaryProfile.visual }}</dd>
             </div>
-            <div v-if="client.profile?.behavior">
+            <div v-if="primaryProfile?.behavior">
               <dt class="text-xs font-bold uppercase tracking-wide text-muted">
                 {{ t("$.client.behavior") }}
               </dt>
-              <dd class="mt-1">{{ client.profile.behavior }}</dd>
+              <dd class="mt-1">{{ primaryProfile.behavior }}</dd>
             </div>
-            <div v-if="client.profile?.typical_quote">
+            <div v-if="primaryProfile?.typical_quote">
               <dt class="text-xs font-bold uppercase tracking-wide text-muted">
                 {{ t("$.client.typical_quote") }}
               </dt>
-              <dd class="mt-1 italic">„{{ client.profile.typical_quote }}“</dd>
+              <dd class="mt-1 italic">„{{ primaryProfile.typical_quote }}“</dd>
             </div>
           </dl>
         </UCard>
@@ -156,25 +157,25 @@ useHead({ title: fullName });
             </h2></template
           >
           <dl class="space-y-5">
-            <div v-if="client.profile?.business_potential">
+            <div v-if="primaryProfile?.business_potential">
               <dt class="text-xs font-bold uppercase tracking-wide text-muted">
                 {{ t("$.client.business_potential") }}
               </dt>
-              <dd class="mt-1">{{ client.profile.business_potential }}</dd>
+              <dd class="mt-1">{{ primaryProfile.business_potential }}</dd>
             </div>
-            <div v-if="client.profile?.average_basket">
+            <div v-if="primaryProfile?.average_basket">
               <dt class="text-xs font-bold uppercase tracking-wide text-muted">
                 {{ t("$.client.average_basket") }}
               </dt>
               <dd class="mt-1 text-2xl font-extrabold text-primary">
-                {{ money(client.profile.average_basket) }}
+                {{ money(primaryProfile.average_basket) }}
               </dd>
             </div>
-            <div v-if="client.profile?.marketing_note">
+            <div v-if="primaryProfile?.marketing_note">
               <dt class="text-xs font-bold uppercase tracking-wide text-muted">
                 {{ t("$.client.marketing_note") }}
               </dt>
-              <dd class="mt-1">{{ client.profile.marketing_note }}</dd>
+              <dd class="mt-1">{{ primaryProfile.marketing_note }}</dd>
             </div>
           </dl>
         </UCard>

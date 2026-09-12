@@ -16,8 +16,15 @@ const { config, response, loading, onSave } = useAdminResource<IClient>(
 const client = computed(
   () => (response.value as any)?.data as IClient | undefined,
 );
+const profiles = ref<Array<{ customer_profile_id: number; priority: number }>>([]);
+watch(client, (value) => {
+  profiles.value = (value?.profiles || []).map((profile) => ({
+    customer_profile_id: Number(profile.id),
+    priority: Number(profile.priority),
+  }));
+}, { immediate: true });
 async function submit(body: Record<string, any>) {
-  if (client.value && (await onSave(body, client.value))?.data)
+  if (client.value && (await onSave({ ...body, profiles: profiles.value }, client.value))?.data)
     await navigateTo(route.path.replace(/\/edit$/, ""));
 }
 useHead({ title: computed(() => t("$.admin.edit_client")) });
@@ -32,6 +39,7 @@ useHead({ title: computed(() => t("$.admin.edit_client")) });
       </div>
     </div>
     <div class="crm-form-shell p-2">
+      <AdminProfileAssignments v-if="client" v-model="profiles" class="m-4 mb-0" />
       <CmpForm
         v-if="client"
         :fields="config.fields"

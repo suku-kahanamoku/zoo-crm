@@ -129,6 +129,8 @@ function formatValue(
   field: Record<string, any>,
 ): string {
   const value = getValue(item, field.colName || field.name);
+  if (field.name === "profile_id")
+    return (item.profiles || []).map((profile: any) => `${profile.priority}. ${profile.name}`).join(", ") || "—";
   if (value === null || value === undefined || value === "") return "—";
   if (field.name === "status") return t(`$.status.${value}`);
   if (field.name === "kind") return t(`$.product.kinds.${value}`);
@@ -477,22 +479,22 @@ function openDetail(item: Record<string, any>): void {
         <div v-if="resource === 'client'" class="mt-4 space-y-3 text-sm">
           <div class="flex flex-wrap gap-2">
             <UBadge color="primary" variant="subtle">{{
-              item.client_type?.label || t("$.client.type_unassigned")
+              item.profiles?.[0]?.name || t("$.client.type_unassigned")
             }}</UBadge>
             <UBadge color="neutral" variant="subtle">{{
               t(`$.status.${item.status || "active"}`)
             }}</UBadge>
           </div>
           <p class="line-clamp-3 text-muted">
-            {{ item.profile?.summary || t("$.client.profile_missing") }}
+            {{ item.profiles?.[0]?.summary || t("$.client.profile_missing") }}
           </p>
-          <p v-if="item.profile?.average_basket" class="font-semibold">
+          <p v-if="item.profiles?.[0]?.average_basket" class="font-semibold">
             {{ t("$.client.average_basket") }}:
             {{
               new Intl.NumberFormat("cs-CZ", {
                 style: "currency",
                 currency: "CZK",
-              }).format(item.profile.average_basket)
+              }).format(item.profiles[0].average_basket)
             }}
           </p>
         </div>

@@ -13,8 +13,9 @@ const { config, loading, onSave, goToList } = useAdminResource<IClient>(
   configSource,
   "admin_clients",
 );
+const profiles = ref<Array<{ customer_profile_id: number; priority: number }>>([]);
 async function submit(body: Record<string, any>) {
-  if ((await onSave(body))?.data) goToList();
+  if ((await onSave({ ...body, profiles: profiles.value }))?.data) goToList();
 }
 useHead({ title: computed(() => t("$.admin.new_client")) });
 </script>
@@ -31,6 +32,7 @@ useHead({ title: computed(() => t("$.admin.new_client")) });
       </div>
     </div>
     <div class="crm-form-shell p-2">
+      <AdminProfileAssignments v-model="profiles" class="m-4 mb-0" />
       <CmpForm
         :fields="config.fields"
         :loading="loading"

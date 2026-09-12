@@ -17,6 +17,11 @@ const navigation = computed(() => [
     icon: "i-heroicons-users",
   },
   {
+    label: t("$.admin.profiles"),
+    to: localePath("/admin/profiles"),
+    icon: "i-lucide-contact-round",
+  },
+  {
     label: t("$.admin.products"),
     to: localePath("/admin/products"),
     icon: "i-heroicons-shopping-bag",

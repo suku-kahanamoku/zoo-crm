@@ -2,14 +2,21 @@
   "syscode": "admin-client-list",
   "restUrl": "/api/admin/client",
   "deleteUrl": "/api/admin/client/${item.id}",
-  "pagination": { "limit": 20 },
-  "factory": { "url": "${first_name}-${last_name}--${id}" },
+  "pagination": {
+    "limit": 20
+  },
+  "factory": {
+    "url": "${first_name}-${last_name}--${id}"
+  },
   "fields": [
     {
       "name": "email",
       "type": "text",
       "label": "$.client.email",
-      "operator": { "value": "$regex", "enabled": true },
+      "operator": {
+        "value": "$regex",
+        "enabled": true
+      },
       "filterable": true,
       "clearable": true
     },
@@ -17,27 +24,33 @@
       "name": "first_name",
       "type": "text",
       "label": "$.client.first_name",
-      "operator": { "value": "$regex", "enabled": true },
+      "operator": {
+        "value": "$regex",
+        "enabled": true
+      },
       "clearable": true
     },
     {
       "name": "last_name",
       "type": "text",
       "label": "$.client.last_name",
-      "operator": { "value": "$regex", "enabled": true },
+      "operator": {
+        "value": "$regex",
+        "enabled": true
+      },
       "filterable": true,
       "clearable": true
     },
     {
-      "name": "client_type_id",
-      "colName": "client_type.label",
+      "name": "profile_id",
+      "colName": "profiles",
       "type": "select",
       "label": "$.client.type",
       "filterable": true,
       "clearable": true,
       "restOptions": {
-        "url": "/api/admin/enumeration?limit=100&q=%7B%22type%22%3A%7B%22value%22%3A%22client_type%22%7D%7D",
-        "label": "label",
+        "url": "/api/admin/profile?limit=100",
+        "label": "name",
         "value": "id"
       }
     },
@@ -46,9 +59,18 @@
       "type": "select",
       "label": "$.client.status",
       "options": [
-        { "value": "active", "label": "$.status.active" },
-        { "value": "inactive", "label": "$.status.inactive" },
-        { "value": "banned", "label": "$.status.banned" }
+        {
+          "value": "active",
+          "label": "$.status.active"
+        },
+        {
+          "value": "inactive",
+          "label": "$.status.inactive"
+        },
+        {
+          "value": "banned",
+          "label": "$.status.banned"
+        }
       ],
       "filterable": true,
       "clearable": true

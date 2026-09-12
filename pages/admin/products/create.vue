@@ -13,8 +13,9 @@ const { config, loading, onSave, goToList } = useAdminResource<IProduct>(
   configSource,
   "admin_products",
 );
+const profileProbabilities = ref<IProduct["profile_probabilities"]>([]);
 async function submit(body: Record<string, any>) {
-  if ((await onSave(body))?.data) goToList();
+  if ((await onSave({ ...body, profile_probabilities: profileProbabilities.value }))?.data) goToList();
 }
 useHead({ title: computed(() => t("$.admin.new_product")) });
 </script>
@@ -38,6 +39,7 @@ useHead({ title: computed(() => t("$.admin.new_product")) });
       :description="t('$.product.images_after_create')"
     />
     <div class="crm-form-shell p-2">
+      <AdminProductProfileProbabilities v-model="profileProbabilities" class="m-4 mb-0" />
       <CmpForm
         :fields="config.fields"
         :loading="loading"

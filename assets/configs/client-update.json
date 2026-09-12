@@ -4,43 +4,57 @@
   "patchUrl": "/api/admin/client/${item.id}",
   "method": "PATCH",
   "fields": [
-    { "name": "first_name", "type": "text", "label": "$.client.first_name", "required": true },
-    { "name": "last_name", "type": "text", "label": "$.client.last_name", "required": true },
-    { "name": "email", "type": "email", "label": "$.client.email", "required": true },
-    { "name": "phone", "type": "text", "label": "$.client.phone" },
     {
-      "name": "client_type_id",
-      "type": "select",
-      "label": "$.client.type",
-      "restOptions": {
-        "url": "/api/admin/enumeration?limit=100&q=%7B%22type%22%3A%7B%22value%22%3A%22client_type%22%7D%7D",
-        "label": "label",
-        "value": "id"
-      }
+      "name": "first_name",
+      "type": "text",
+      "label": "$.client.first_name",
+      "required": true
+    },
+    {
+      "name": "last_name",
+      "type": "text",
+      "label": "$.client.last_name",
+      "required": true
+    },
+    {
+      "name": "email",
+      "type": "email",
+      "label": "$.client.email",
+      "required": true
+    },
+    {
+      "name": "phone",
+      "type": "text",
+      "label": "$.client.phone"
     },
     {
       "name": "status",
       "type": "select",
       "label": "$.client.status",
       "options": [
-        { "value": "active", "label": "$.status.active" },
-        { "value": "inactive", "label": "$.status.inactive" },
-        { "value": "banned", "label": "$.status.banned" }
+        {
+          "value": "active",
+          "label": "$.status.active"
+        },
+        {
+          "value": "inactive",
+          "label": "$.status.inactive"
+        },
+        {
+          "value": "banned",
+          "label": "$.status.banned"
+        }
       ]
     },
     {
       "name": "role_id",
       "type": "select",
       "label": "$.client.role",
-      "restOptions": { "url": "/api/admin/role?limit=100", "label": "label", "value": "id" }
-    },
-    { "name": "profile.summary", "type": "textarea", "label": "$.client.profile_summary" },
-    { "name": "profile.aura", "type": "text", "label": "$.client.aura" },
-    { "name": "profile.visual", "type": "textarea", "label": "$.client.visual" },
-    { "name": "profile.behavior", "type": "textarea", "label": "$.client.behavior" },
-    { "name": "profile.business_potential", "type": "textarea", "label": "$.client.business_potential" },
-    { "name": "profile.typical_quote", "type": "textarea", "label": "$.client.typical_quote" },
-    { "name": "profile.average_basket", "type": "number", "label": "$.client.average_basket" },
-    { "name": "profile.marketing_note", "type": "textarea", "label": "$.client.marketing_note" }
+      "restOptions": {
+        "url": "/api/admin/role?limit=100",
+        "label": "label",
+        "value": "id"
+      }
+    }
   ]
 }

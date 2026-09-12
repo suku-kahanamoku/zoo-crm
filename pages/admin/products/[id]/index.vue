@@ -18,20 +18,11 @@ const {
 const categoriesUrl = computed(
   () => config.value?.relations?.categories?.restUrl as string | undefined,
 );
-const clientTypesUrl = computed(
-  () => config.value?.relations?.clientTypes?.restUrl as string | undefined,
-);
 const { data: categoriesResponse } = useAsyncData(
   () => `${config.value?.syscode || "product-detail"}-categories`,
   () =>
     categoriesUrl.value ? useApi(categoriesUrl.value) : Promise.resolve({}),
   { watch: [categoriesUrl] },
-);
-const { data: clientTypesResponse } = useAsyncData(
-  () => `${config.value?.syscode || "product-detail"}-client-types`,
-  () =>
-    clientTypesUrl.value ? useApi(clientTypesUrl.value) : Promise.resolve({}),
-  { watch: [clientTypesUrl] },
 );
 const product = computed(
   () => (response.value as any)?.data as IProduct | undefined,
@@ -43,10 +34,7 @@ const categories = computed(() => {
   ).filter((item) => ids.includes(Number(item.id)));
 });
 const targetSegments = computed(() => {
-  const codes = product.value?.data?.target_segments || [];
-  return (
-    ((clientTypesResponse.value as any)?.data || []) as Record<string, any>[]
-  ).filter((item) => codes.includes(item.syscode));
+  return (product.value?.profile_probabilities || []).filter((item) => item.is_target === 1);
 });
 const editPath = computed(() => {
   const path = route.path.replace(new RegExp(`^/${locale.value}(?=/|$)`), "");
@@ -221,7 +209,7 @@ useHead({
               color="primary"
               variant="subtle"
             >
-              {{ segment.label }}
+              {{ segment.name }}
             </UBadge>
           </div>
           <p v-else class="text-muted">

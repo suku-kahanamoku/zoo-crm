@@ -8,25 +8,33 @@ export interface IClient extends IItem {
   status?: "active" | "inactive" | "banned";
   role_id?: number;
   role?: { id: number; name: string; label?: string };
-  client_type_id?: number | null;
-  client_type?: { id: number; syscode: string; label: string } | null;
-  profile?: IClientProfile | null;
+  profiles?: IUserCustomerProfile[];
   last_login_at?: string | null;
   created_at?: string;
 }
 
-export interface IClientProfile {
+export interface ICustomerProfile extends IItem {
+  profile_number?: number | null;
+  syscode: string;
+  name: string;
+  selection_need?: string | null;
   summary?: string;
   aura?: string;
   visual?: string;
   behavior?: string;
   business_potential?: string;
   typical_quote?: string;
-  preferred_animals?: string[];
-  preferred_product_kinds?: string[];
-  recommended_product_skus?: string[];
   average_basket?: number;
   marketing_note?: string;
+  questions: string[];
+  objections: string[];
+  preferences: Array<{ type: "animal" | "product_kind"; value: string }>;
+  position?: number;
+  published?: 0 | 1;
+}
+
+export interface IUserCustomerProfile extends ICustomerProfile {
+  priority: number;
 }
 
 export interface IAnimalCategory extends IItem {
@@ -42,7 +50,6 @@ export interface IProductData {
   brand?: string;
   weight?: number;
   unit?: string;
-  target_segments?: string[];
 }
 
 export interface IProductFile {
@@ -66,6 +73,15 @@ export interface IProduct extends IItem {
   categories?: IAnimalCategory[];
   file_ids?: number[];
   files?: IProductFile[];
+  profile_probabilities?: IProductProfileProbability[];
+}
+
+export interface IProductProfileProbability {
+  customer_profile_id: number;
+  probability_percent: number;
+  is_target: 0 | 1;
+  syscode?: string;
+  name?: string;
 }
 
 export interface IItemResponse<T> extends IResponse {

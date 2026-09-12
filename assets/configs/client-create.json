@@ -3,19 +3,28 @@
   "postUrl": "/api/admin/client",
   "method": "POST",
   "fields": [
-    { "name": "first_name", "type": "text", "label": "$.client.first_name", "required": true },
-    { "name": "last_name", "type": "text", "label": "$.client.last_name", "required": true },
-    { "name": "email", "type": "email", "label": "$.client.email", "required": true },
-    { "name": "phone", "type": "text", "label": "$.client.phone" },
     {
-      "name": "client_type_id",
-      "type": "select",
-      "label": "$.client.type",
-      "restOptions": {
-        "url": "/api/admin/enumeration?limit=100&q=%7B%22type%22%3A%7B%22value%22%3A%22client_type%22%7D%7D",
-        "label": "label",
-        "value": "id"
-      }
+      "name": "first_name",
+      "type": "text",
+      "label": "$.client.first_name",
+      "required": true
+    },
+    {
+      "name": "last_name",
+      "type": "text",
+      "label": "$.client.last_name",
+      "required": true
+    },
+    {
+      "name": "email",
+      "type": "email",
+      "label": "$.client.email",
+      "required": true
+    },
+    {
+      "name": "phone",
+      "type": "text",
+      "label": "$.client.phone"
     },
     {
       "name": "password",
@@ -29,10 +38,11 @@
       "name": "role_id",
       "type": "select",
       "label": "$.client.role",
-      "restOptions": { "url": "/api/admin/role?limit=100", "label": "label", "value": "id" }
-    },
-    { "name": "profile.summary", "type": "textarea", "label": "$.client.profile_summary" },
-    { "name": "profile.business_potential", "type": "textarea", "label": "$.client.business_potential" },
-    { "name": "profile.marketing_note", "type": "textarea", "label": "$.client.marketing_note" }
+      "restOptions": {
+        "url": "/api/admin/role?limit=100",
+        "label": "label",
+        "value": "id"
+      }
+    }
   ]
 }

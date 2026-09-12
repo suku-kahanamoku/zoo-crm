@@ -27,7 +27,7 @@ const fields: IFormField[] = [
     label: "$.client.password",
     required: true,
     clearable: true,
-    minLength: 8,
+    minLength: 5,
     size: "lg",
   },
 ];

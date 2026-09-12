@@ -16,6 +16,8 @@ const { config, response, loading, onSave, refresh } =
 const product = computed(
   () => (response.value as any)?.data as IProduct | undefined,
 );
+const profileProbabilities = ref<IProduct["profile_probabilities"]>([]);
+watch(product, (value) => { profileProbabilities.value = (value?.profile_probabilities || []).map((row) => ({ ...row })); }, { immediate: true });
 const {
   uploadedFiles,
   uploading,
@@ -27,7 +29,7 @@ const {
 const savingFiles = ref(false);
 
 async function submit(body: Record<string, any>) {
-  if (product.value && (await onSave(body, product.value))?.data)
+  if (product.value && (await onSave({ ...body, profile_probabilities: profileProbabilities.value }, product.value))?.data)
     await navigateTo(route.path.replace(/\/edit$/, ""));
 }
 
@@ -101,6 +103,7 @@ useHead({ title: computed(() => t("$.admin.edit_product")) });
     >
       <template #detail>
         <div class="pt-5">
+          <AdminProductProfileProbabilities v-model="profileProbabilities" class="mb-5" />
           <CmpForm
             :fields="config.fields"
             :item="product"
