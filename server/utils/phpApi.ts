@@ -75,17 +75,6 @@ export async function phpApiFetch<T = any>(
     ...(hostHeader ? { "X-Forwarded-Host": hostHeader } : {}),
   };
   if (token) headers.Authorization = `Bearer ${token}`;
-  if (method === "GET") {
-    const internalKey = String(config.internalApiKey || "");
-    if (!internalKey) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: "INTERNAL_API_KEY is not configured",
-      });
-    }
-    headers["X-Internal-Key"] = internalKey;
-  }
-
   return await $fetch<PhpApiResponse<T>>(String(config.phpApiBaseUrl) + path, {
     method: method as any,
     headers,
