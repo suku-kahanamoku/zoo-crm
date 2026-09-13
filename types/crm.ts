@@ -78,7 +78,6 @@ export interface IProduct extends IItem {
 export interface IProductProfileProbability {
   customer_profile_id: number;
   probability_percent: number;
-  is_target: 0 | 1;
   syscode?: string;
   name?: string;
 }

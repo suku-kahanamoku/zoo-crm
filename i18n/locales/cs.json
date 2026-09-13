@@ -143,9 +143,9 @@
       "is_published": "Publikováno",
       "is_hidden": "Skryto",
       "catalog_data": "Katalogové údaje",
-      "target_segments": "Cílové typy klientů",
-      "target_segments_help": "Segmenty, kterým má smysl tento produkt aktivně doporučovat.",
-      "no_target_segments": "Produkt zatím nemá přiřazený cílový segment."
+      "target_segments": "Pravděpodobné zákaznické profily",
+      "target_segments_help": "Profily s pravděpodobností nákupu produktu alespoň 30 %.",
+      "no_target_segments": "Produkt zatím nemá profil s pravděpodobností alespoň 30 %."
     },
     "status": {
       "active": "Aktivní",

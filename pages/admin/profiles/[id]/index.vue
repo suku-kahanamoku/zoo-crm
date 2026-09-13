@@ -38,6 +38,7 @@ const products = computed(() => {
       ...product,
       probability: Number(product.profile_probabilities?.find((row) => Number(row.customer_profile_id) === Number(profile.value?.id))?.probability_percent || 0),
     }))
+    .filter((product) => product.probability >= 30)
     .sort((a, b) => b.probability - a.probability || a.name.localeCompare(b.name));
 });
 

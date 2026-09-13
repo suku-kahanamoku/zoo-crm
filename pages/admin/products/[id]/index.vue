@@ -34,7 +34,7 @@ const categories = computed(() => {
   ).filter((item) => ids.includes(Number(item.id)));
 });
 const targetSegments = computed(() => {
-  return (product.value?.profile_probabilities || []).filter((item) => item.is_target === 1);
+  return (product.value?.profile_probabilities || []).filter((item) => Number(item.probability_percent) >= 30);
 });
 const editPath = computed(() => {
   const path = route.path.replace(new RegExp(`^/${locale.value}(?=/|$)`), "");
@@ -203,7 +203,7 @@ useHead({
           <div v-if="targetSegments.length" class="flex flex-wrap gap-2">
             <UBadge
               v-for="segment in targetSegments"
-              :key="segment.id"
+              :key="segment.customer_profile_id"
               color="primary"
               variant="subtle"
             >

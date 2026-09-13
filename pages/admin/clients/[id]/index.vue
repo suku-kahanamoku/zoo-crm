@@ -29,9 +29,15 @@ const client = computed(
 const primaryProfile = computed(() => [...(client.value?.profiles || [])].sort((a,b) => a.position-b.position)[0]);
 const recommendedProducts = computed(() => {
   const ids = new Set((client.value?.profiles || []).map((profile) => Number(profile.id)));
-  return (((productsResponse.value as any)?.data || []) as IProduct[]).filter((product) =>
-    (product.profile_probabilities || []).some((row) => ids.has(Number(row.customer_profile_id)) && row.is_target === 1),
-  );
+  return (((productsResponse.value as any)?.data || []) as IProduct[])
+    .map((product) => ({
+      ...product,
+      probability: Math.max(0, ...(product.profile_probabilities || [])
+        .filter((row) => ids.has(Number(row.customer_profile_id)))
+        .map((row) => Number(row.probability_percent))),
+    }))
+    .filter((product) => product.probability >= 30)
+    .sort((a, b) => b.probability - a.probability || a.name.localeCompare(b.name));
 });
 const fullName = computed(() =>
   client.value
@@ -206,7 +212,10 @@ useHead({ title: fullName });
             "
             class="rounded-xl border border-default p-4 transition hover:border-primary hover:bg-primary/5"
           >
-            <p class="font-bold">{{ product.name }}</p>
+            <div class="flex items-start justify-between gap-2">
+              <p class="font-bold">{{ product.name }}</p>
+              <UBadge color="primary" variant="subtle">{{ product.probability }} %</UBadge>
+            </div>
             <p class="mt-1 text-sm text-muted">{{ product.sku }}</p>
             <p class="mt-3 font-extrabold text-primary">
               {{ money(Number(product.price)) }}

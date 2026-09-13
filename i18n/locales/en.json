@@ -143,9 +143,9 @@
       "is_published": "Published",
       "is_hidden": "Hidden",
       "catalog_data": "Catalogue data",
-      "target_segments": "Target customer types",
-      "target_segments_help": "Segments to whom this product should be actively recommended.",
-      "no_target_segments": "This product has no target segment yet."
+      "target_segments": "Likely customer profiles",
+      "target_segments_help": "Profiles with at least 30% purchase probability for this product.",
+      "no_target_segments": "This product has no profile with at least 30% probability."
     },
     "status": {
       "active": "Active",
