@@ -16,11 +16,11 @@ const { config, response, loading, onSave } = useAdminResource<IClient>(
 const client = computed(
   () => (response.value as any)?.data as IClient | undefined,
 );
-const profiles = ref<Array<{ customer_profile_id: number; priority: number }>>([]);
+const profiles = ref<Array<{ customer_profile_id: number; position: number }>>([]);
 watch(client, (value) => {
   profiles.value = (value?.profiles || []).map((profile) => ({
     customer_profile_id: Number(profile.id),
-    priority: Number(profile.priority),
+    position: Number(profile.position),
   }));
 }, { immediate: true });
 async function submit(body: Record<string, any>) {

@@ -13,7 +13,7 @@ const { config, loading, onSave, goToList } = useAdminResource<IClient>(
   configSource,
   "admin_clients",
 );
-const profiles = ref<Array<{ customer_profile_id: number; priority: number }>>([]);
+const profiles = ref<Array<{ customer_profile_id: number; position: number }>>([]);
 async function submit(body: Record<string, any>) {
   if ((await onSave({ ...body, profiles: profiles.value }))?.data) goToList();
 }

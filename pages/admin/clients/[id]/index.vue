@@ -26,7 +26,7 @@ const { data: productsResponse } = useAsyncData(
 const client = computed(
   () => (response.value as any)?.data as IClient | undefined,
 );
-const primaryProfile = computed(() => [...(client.value?.profiles || [])].sort((a,b) => a.priority-b.priority)[0]);
+const primaryProfile = computed(() => [...(client.value?.profiles || [])].sort((a,b) => a.position-b.position)[0]);
 const recommendedProducts = computed(() => {
   const ids = new Set((client.value?.profiles || []).map((profile) => Number(profile.id)));
   return (((productsResponse.value as any)?.data || []) as IProduct[]).filter((product) =>

@@ -130,7 +130,7 @@ function formatValue(
 ): string {
   const value = getValue(item, field.colName || field.name);
   if (field.name === "profile_id")
-    return (item.profiles || []).map((profile: any) => `${profile.priority}. ${profile.name}`).join(", ") || "—";
+    return (item.profiles || []).map((profile: any) => `${profile.position}. ${profile.name}`).join(", ") || "—";
   if (value === null || value === undefined || value === "") return "—";
   if (field.name === "status") return t(`$.status.${value}`);
   if (field.name === "kind") return t(`$.product.kinds.${value}`);

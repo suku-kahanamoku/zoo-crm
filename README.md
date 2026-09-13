@@ -44,7 +44,7 @@ proměnných je potřeba nový deploy, protože je serverová aplikace načítá
 
 - Klienti používají modul `users`.
 - Definice zákaznických profilů používají modul `customer-profiles`; otázky, námitky a preference jsou samostatná relační data profilu.
-- Klient může mít více profilů v M:N tabulce `user_customer_profile`; `priority=1` označuje jeho nejvyšší prioritu.
+- Klient může mít více profilů v M:N tabulce `user_customer_profile`; `position=1` označuje jeho nejdřívější pořadí.
 - Druhy zvířat používají modul `categories`.
 - Produkty používají modul `products`; vazbu na druhy zvířat zajišťuje `category_ids`.
 - Vhodnost produktu pro profil ukládá `product_customer_profile_probability`; Nuxt pracuje s API polem `profile_probabilities`.

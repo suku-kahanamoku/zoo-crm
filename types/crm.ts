@@ -34,7 +34,7 @@ export interface ICustomerProfile extends IItem {
 }
 
 export interface IUserCustomerProfile extends ICustomerProfile {
-  priority: number;
+  position: number;
 }
 
 export interface IAnimalCategory extends IItem {
