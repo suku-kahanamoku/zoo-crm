@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ICustomerProfile, IProduct } from "@/types/crm";
+import type { IAnimalCategory, ICustomerProfile, IProduct } from "@/types/crm";
 
 definePageMeta({
   layout: "admin",
@@ -20,6 +20,16 @@ const { data: productsResponse } = useAsyncData(
   () => `customer-profile-${resourceId.value}-products`,
   () => useApi("/api/admin/product?limit=100"),
 );
+const { data: categoriesResponse } = useAsyncData("profile-product-categories", () =>
+  useApi("/api/admin/category?limit=100"),
+);
+const categoryMap = computed(() => Object.fromEntries(
+  (((categoriesResponse.value as any)?.data || []) as IAnimalCategory[])
+    .map((category) => [Number(category.id), category.name]),
+));
+const productCategories = (product: IProduct) => (product.category_ids || [])
+  .map((id) => categoryMap.value[Number(id)])
+  .filter(Boolean);
 const profile = computed(() => (profileResponse.value as any)?.data as ICustomerProfile | undefined);
 const products = computed(() => {
   if (!profile.value) return [];
@@ -114,7 +124,7 @@ useHead({ title: computed(() => profile.value?.name || t("$.admin.profile_detail
             <thead class="border-b border-default text-xs uppercase tracking-wide text-muted">
               <tr>
                 <th class="px-3 py-3">{{ t("$.product.name") }}</th>
-                <th class="px-3 py-3">{{ t("$.product.kind") }}</th>
+                <th class="px-3 py-3">{{ t("$.product.categories") }}</th>
                 <th class="px-3 py-3">{{ t("$.product.approx_price") }}</th>
                 <th class="px-3 py-3 text-right">{{ t("$.product.purchase_probability") }}</th>
               </tr>
@@ -124,7 +134,12 @@ useHead({ title: computed(() => profile.value?.name || t("$.admin.profile_detail
                 <td class="px-3 py-3">
                   <NuxtLink :to="localePath(`/admin/products/${product.id}`)" class="font-bold text-primary hover:underline">{{ product.name }}</NuxtLink>
                 </td>
-                <td class="px-3 py-3"><UBadge color="neutral" variant="subtle">{{ t(`$.product.kinds.${product.kind || 'other'}`) }}</UBadge></td>
+                <td class="px-3 py-3">
+                  <div class="flex flex-wrap gap-1">
+                    <UBadge v-for="category in productCategories(product)" :key="category" color="neutral" variant="subtle">{{ category }}</UBadge>
+                    <span v-if="!productCategories(product).length" class="text-muted">{{ t("$.product.no_categories") }}</span>
+                  </div>
+                </td>
                 <td class="px-3 py-3">{{ priceRange(product) }}</td>
                 <td class="px-3 py-3 text-right">
                   <UBadge :color="product.probability >= 30 ? 'primary' : 'neutral'" variant="subtle" size="lg">{{ product.probability }} %</UBadge>

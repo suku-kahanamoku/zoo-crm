@@ -46,7 +46,7 @@ proměnných je potřeba nový deploy, protože je serverová aplikace načítá
 - Definice zákaznických profilů používají modul `customer-profiles`; otázky, námitky a preference jsou samostatná relační data profilu.
 - Klient může mít více profilů v M:N tabulce `user_customer_profile`; `position=1` označuje jeho nejdřívější pořadí.
 - Druhy zvířat používají modul `categories`.
-- Produkty používají modul `products`; vazbu na druhy zvířat zajišťuje `category_ids`.
+- Produkty používají modul `products`; druh produktu i určení pro zvířata jsou běžné kategorie propojené přes `product_category` a API pole `category_ids`.
 - Vhodnost produktu pro profil ukládá `product_customer_profile_probability`; Nuxt pracuje s API polem `profile_probabilities`.
 - EAN, značka, hmotnost a jednotka se ukládají do flexibilního JSON pole `product.data`.
 - Obrázky produktů používají dvoufázový upload modul `files`.

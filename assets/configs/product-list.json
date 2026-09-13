@@ -29,18 +29,15 @@
       "clearable": true
     },
     {
-      "name": "kind",
+      "name": "category.syscode",
+      "colName": "category_ids",
       "type": "select",
-      "label": "$.product.kind",
-      "options": [
-        { "value": "food", "label": "$.product.kinds.food" },
-        { "value": "treats", "label": "$.product.kinds.treats" },
-        { "value": "toys", "label": "$.product.kinds.toys" },
-        { "value": "hygiene", "label": "$.product.kinds.hygiene" },
-        { "value": "equipment", "label": "$.product.kinds.equipment" },
-        { "value": "supplements", "label": "$.product.kinds.supplements" },
-        { "value": "other", "label": "$.product.kinds.other" }
-      ],
+      "label": "$.product.categories",
+      "restOptions": {
+        "url": "/api/admin/category?limit=100",
+        "label": "name",
+        "value": "syscode"
+      },
       "filterable": true,
       "clearable": true
     },

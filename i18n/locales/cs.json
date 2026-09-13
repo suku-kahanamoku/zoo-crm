@@ -125,14 +125,14 @@
       "sku_help": "Při ponechání prázdné hodnoty vygeneruje backend SKU automaticky.",
       "ean": "EAN",
       "brand": "Značka",
-      "kind": "Typ produktu",
+      "categories": "Kategorie",
+      "no_categories": "Bez kategorie",
       "variant": "Varianta",
       "price": "Cena s DPH",
       "stock": "Skladem",
       "weight": "Hmotnost / objem",
       "unit": "Jednotka",
       "published": "Publikováno",
-      "animals": "Určeno pro",
       "description": "Popis",
       "images": "Obrázky produktu",
       "save_images": "Uložit nové obrázky",
@@ -145,16 +145,7 @@
       "catalog_data": "Katalogové údaje",
       "target_segments": "Cílové typy klientů",
       "target_segments_help": "Segmenty, kterým má smysl tento produkt aktivně doporučovat.",
-      "no_target_segments": "Produkt zatím nemá přiřazený cílový segment.",
-      "kinds": {
-        "food": "Krmivo",
-        "treats": "Pamlsky",
-        "toys": "Hračky",
-        "hygiene": "Hygiena",
-        "equipment": "Chovatelské potřeby",
-        "supplements": "Doplňky stravy",
-        "other": "Ostatní"
-      }
+      "no_target_segments": "Produkt zatím nemá přiřazený cílový segment."
     },
     "status": {
       "active": "Aktivní",

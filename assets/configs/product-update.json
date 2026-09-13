@@ -19,42 +19,6 @@
       "required": true
     },
     {
-      "name": "kind",
-      "type": "select",
-      "label": "$.product.kind",
-      "options": [
-        {
-          "value": "food",
-          "label": "$.product.kinds.food"
-        },
-        {
-          "value": "treats",
-          "label": "$.product.kinds.treats"
-        },
-        {
-          "value": "toys",
-          "label": "$.product.kinds.toys"
-        },
-        {
-          "value": "hygiene",
-          "label": "$.product.kinds.hygiene"
-        },
-        {
-          "value": "equipment",
-          "label": "$.product.kinds.equipment"
-        },
-        {
-          "value": "supplements",
-          "label": "$.product.kinds.supplements"
-        },
-        {
-          "value": "other",
-          "label": "$.product.kinds.other"
-        }
-      ],
-      "required": true
-    },
-    {
       "name": "data.brand",
       "type": "text",
       "label": "$.product.brand"
@@ -132,7 +96,7 @@
     {
       "name": "category_ids",
       "type": "select",
-      "label": "$.product.animals",
+      "label": "$.product.categories",
       "multiple": true,
       "required": true,
       "restOptions": {

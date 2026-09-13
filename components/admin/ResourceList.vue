@@ -133,7 +133,8 @@ function formatValue(
     return (item.profiles || []).map((profile: any) => `${profile.position}. ${profile.name}`).join(", ") || "—";
   if (value === null || value === undefined || value === "") return "—";
   if (field.name === "status") return t(`$.status.${value}`);
-  if (field.name === "kind") return t(`$.product.kinds.${value}`);
+  if (field.name === "category.syscode" || field.name === "category_ids")
+    return productCategories(item).join(", ") || t("$.product.no_categories");
   if (field.name === "published")
     return value ? t("$.form.yes") : t("$.form.no");
   if (field.name === "price") {
@@ -500,10 +501,7 @@ function openDetail(item: Record<string, any>): void {
         </div>
 
         <div v-else-if="resource === 'product'" class="mt-4 space-y-3 text-sm">
-          <div class="flex items-center justify-between gap-3">
-            <UBadge color="secondary" variant="subtle">{{
-              t(`$.product.kinds.${item.kind || "other"}`)
-            }}</UBadge>
+          <div class="flex items-center justify-end gap-3">
             <span class="text-lg font-extrabold text-primary">
               {{
                 new Intl.NumberFormat("cs-CZ", {
@@ -525,6 +523,7 @@ function openDetail(item: Record<string, any>): void {
             >
               {{ category }}
             </UBadge>
+            <span v-if="!productCategories(item).length" class="text-muted">{{ t("$.product.no_categories") }}</span>
           </div>
           <p>
             {{ t("$.product.stock") }}:

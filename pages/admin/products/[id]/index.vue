@@ -102,9 +102,6 @@ useHead({
           </div>
           <div>
             <div class="flex flex-wrap items-center gap-2">
-              <UBadge color="secondary" variant="subtle">{{
-                t(`$.product.kinds.${product.kind || "other"}`)
-              }}</UBadge>
               <UBadge
                 :color="product.published ? 'success' : 'neutral'"
                 variant="subtle"
@@ -131,6 +128,7 @@ useHead({
               >
                 {{ category.name }}
               </UBadge>
+              <span v-if="!categories.length" class="text-sm text-muted">{{ t("$.product.no_categories") }}</span>
             </div>
           </div>
         </div>

@@ -125,14 +125,14 @@
       "sku_help": "If left empty, the backend generates an SKU automatically.",
       "ean": "EAN",
       "brand": "Brand",
-      "kind": "Product type",
+      "categories": "Categories",
+      "no_categories": "No category",
       "variant": "Variant",
       "price": "Price incl. VAT",
       "stock": "In stock",
       "weight": "Weight / volume",
       "unit": "Unit",
       "published": "Published",
-      "animals": "Suitable for",
       "description": "Description",
       "images": "Product images",
       "save_images": "Save new images",
@@ -145,16 +145,7 @@
       "catalog_data": "Catalogue data",
       "target_segments": "Target customer types",
       "target_segments_help": "Segments to whom this product should be actively recommended.",
-      "no_target_segments": "This product has no target segment yet.",
-      "kinds": {
-        "food": "Food",
-        "treats": "Treats",
-        "toys": "Toys",
-        "hygiene": "Hygiene",
-        "equipment": "Equipment",
-        "supplements": "Supplements",
-        "other": "Other"
-      }
+      "no_target_segments": "This product has no target segment yet."
     },
     "status": {
       "active": "Active",

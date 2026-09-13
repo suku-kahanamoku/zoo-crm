@@ -66,7 +66,6 @@ export interface IProduct extends IItem {
   price: number;
   stock_quantity: number;
   published?: 0 | 1;
-  kind?: string | null;
   variant?: string | null;
   data?: IProductData;
   category_ids?: number[];
